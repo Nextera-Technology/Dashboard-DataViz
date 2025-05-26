@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nextera Employability Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- AmCharts Library -->
+  <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/plugins/wordCloud.js"></script>
+  <style>
+    :root {
+      --primary: #8FD2D2;
+      --dark: #0E3F2D;
+      --accent: #15616D;
+      --neutral: #A0A0A0;
+      --bg-light: #F5F8FA;
+      --sidebar-bg: #F0FAFC;
+      --sidebar-border: #D0E6E6;
+      --sidebar-width: 220px;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      display: flex;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg-light);
+    }
+    /* Enhanced Sidebar Styling */
+    .sidebar {
+      width: var(--sidebar-width);
+      /* background: linear-gradient(135deg, #F8FDFD 0%, #F0FAFC 100%); */
+      background: #FFFFFF;
+      border-right: 1px solid var(--sidebar-border);
+      color: var(--dark);
+      padding: 0;
+      min-height: 100vh;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Logo Container */
+    .sidebar .logo-container {
+      padding: 30px 20px;
+      text-align: center;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fdfd 100%);
+      border-bottom: 1px solid #e6f3f3;
+      margin-bottom: 20px;
+    }
+
+    .sidebar .logo-container img {
+      width: 160px;
+      height: auto;
+      max-width: 100%;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+      transition: all 0.3s ease;
+    }
+
+    .sidebar .logo-container img:hover {
+      transform: scale(1.02);
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+    }
+
+    /* Navigation Styling */
+    .sidebar nav {
+      padding: 0 20px;
+    }
+
+    .sidebar nav a {
+      display: block;
+      color: var(--dark);
+      text-decoration: none;
+      margin: 8px 0;
+      font-weight: 500;
+      font-size: 15px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(143, 210, 210, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .sidebar nav a:hover::before {
+      left: 100%;
+    }
+
+    .sidebar nav a:hover {
+      background-color: rgba(143, 210, 210, 0.1);
+      transform: translateX(4px);
+      box-shadow: 0 2px 8px rgba(143, 210, 210, 0.2);
+    }
+
+    .sidebar nav a.active {
+      /* background: linear-gradient(135deg, #8FD2D2 0%, #7BCACA 100%); */
+      background: #EBF3F5;
+      /* color: white; */
+      color: #003D46;
+      box-shadow: 0 4px 12px rgba(143, 210, 210, 0.3);
+      transform: translateX(2px);
+    }
+
+    .sidebar nav a.active:hover {
+      /* background: linear-gradient(135deg, #7BCACA 0%, #6BC2C2 100%); */
+      background: #c3d8dd;
+      transform: translateX(6px);
+    }
+
+    /* Add some elegant spacing */
+    .sidebar::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 20px;
+      right: 20px;
+      height: 1px;
+      /* background: var(--dark); */
+      /* background: linear-gradient(90deg, transparent, var(--sidebar-border), transparent); */
+    }
+    .content {
+      flex: 1;
+      padding: 20px;
+      background-color: var(--bg-light);
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    header h1 {
+      font-size: 24px;
+      color: var(--dark);
+    }
+    .filters {
+      display: flex;
+      gap: 10px;
+    }
+    .filters select {
+      padding: 6px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 20px;
+    }
+    .chart-box {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+    .chart-box h3 {
+      margin-bottom: 10px;
+      font-size: 16px;
+      color: var(--accent);
+    }
+    .chart-container {
+      width: 100%;
+      height: 450px;
+    }
+    #chart6 .company-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      /* justify-content: space-between; */
+    }
+
+    #chart6 .company-item {
+      flex: 1 1 calc(25% - 10px);
+      min-width: 80px;
+      max-width: 130px;
+      text-align: center;
+    }
+
+    /* #chart6 .company-item img {
+      width: 100%;
+      height: auto;
+    } */
+
+    .tabs {
+      margin-bottom: 10px;
+    }
+    .tab-button {
+      background-color: #ffffff;
+      border: 1px solid #15616D;
+      color: #15616D;
+      padding: 5px 12px;
+      margin-right: 5px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .tab-button:hover {
+      background-color: #15616D;
+      color: #fff;
+    }
+    .tab-button.active {
+      background-color: #15616D;
+      color: #fff;
+    }
+
+    .tab-button3 {
+      background-color: #ffffff;
+      border: 1px solid #15616D;
+      color: #15616D;
+      padding: 5px 12px;
+      margin-right: 5px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .tab-button3:hover {
+      background-color: #15616D;
+      color: #fff;
+    }
+    .tab-button3.active {
+      background-color: #15616D;
+      color: #fff;
+    }
+
+    .tab-button4 {
+      background-color: #ffffff;
+      border: 1px solid #15616D;
+      color: #15616D;
+      padding: 5px 12px;
+      margin-right: 5px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .tab-button4:hover {
+      background-color: #15616D;
+      color: #fff;
+    }
+    .tab-button4.active {
+      background-color: #15616D;
+      color: #fff;
+    }
+
+    .tab-button5 {
+      background-color: #ffffff;
+      border: 1px solid #15616D;
+      color: #15616D;
+      padding: 5px 12px;
+      margin-right: 5px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .tab-button5:hover {
+      background-color: #15616D;
+      color: #fff;
+    }
+    .tab-button5.active {
+      background-color: #15616D;
+      color: #fff;
+    }
+
+    .tab-button6 {
+      background-color: #ffffff;
+      border: 1px solid #15616D;
+      color: #15616D;
+      padding: 5px 12px;
+      margin-right: 5px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .tab-button6:hover {
+      background-color: #15616D;
+      color: #fff;
+    }
+    .tab-button6.active {
+      background-color: #15616D;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="logo-container">
+      <img src="https://i.imgur.com/Juiw9Yn.png" alt="Nextera Logo">
+    </div>
+    <nav>
+      <a href="#" class="active">Dashboard</a>
+      <!-- Add more navigation items as needed -->
+    </nav>
+  </aside>
+  <main class="content">
+    <header>
+      <h1>Employability Survey Dashboard</h1>
+      <!-- <div class="filters">
+        <label for="cohort">Cohort:</label>
+        <select id="cohort">
+          <option value="2022">2022</option>
+          <option value="2023" selected>2023</option>
+          <option value="2024">2024</option>
+        </select>
+      </div> -->
+    </header>
+
+    <div class="grid">
+      <div class="chart-box">
+        <h3>Opened - Started - Completed Survey (ES1–ES4)</h3>
+        <div id="chart1" class="chart-container"></div>
+      </div>
+      <div class="chart-box">
+        <h3>Professional Status</h3>
+        <div class="tabs">
+          <button class="tab-button" data-tab="ES1">ES1</button>
+          <button class="tab-button active" data-tab="ES2">ES2</button>
+          <button class="tab-button" data-tab="ES3">ES3</button>
+          <button class="tab-button" data-tab="ES4">ES4</button>
+        </div>
+        <div id="chart2" class="chart-container"></div>
+      </div>
+      <div class="chart-box">
+        <h3>Contract Type</h3>
+        <div class="tabs">
+          <button class="tab-button3" data-tab="ES1">ES1</button>
+          <button class="tab-button3 active" data-tab="ES2">ES2</button>
+          <button class="tab-button3" data-tab="ES3">ES3</button>
+          <button class="tab-button3" data-tab="ES4">ES4</button>
+        </div>
+        <div id="chart3" class="chart-container"></div>
+      </div>
+
+      <div class="chart-box">
+        <h3>Manager Level</h3>
+        <div class="tabs">
+          <button class="tab-button4" data-tab="ES1">ES1</button>
+          <button class="tab-button4 active" data-tab="ES2">ES2</button>
+          <button class="tab-button4" data-tab="ES3">ES3</button>
+          <button class="tab-button4" data-tab="ES4">ES4</button>
+        </div>
+        <div id="chart4" class="chart-container"></div>
+      </div>
+
+      <div class="chart-box">
+        <h3>Top 8 Job Roles</h3>
+        <div class="tabs">
+          <button class="tab-button5" data-tab="ES1">ES1</button>
+          <button class="tab-button5 active" data-tab="ES2">ES2</button>
+          <button class="tab-button5" data-tab="ES3">ES3</button>
+          <button class="tab-button5" data-tab="ES4">ES4</button>
+        </div>
+        <div id="chart5" class="chart-container"></div>
+      </div>
+
+      <div class="chart-box">
+        <h3 id="chart6-title">Top 8 Companies</h3>
+        <div class="tabs">
+          <button class="tab-button6" data-tab="ES1">ES1</button>
+          <button class="tab-button6 active" data-tab="ES2">ES2</button>
+          <button class="tab-button6" data-tab="ES3">ES3</button>
+          <button class="tab-button6" data-tab="ES4">ES4</button>
+        </div>
+        <div id="chart6" class="chart-container"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Charts Initialization Scripts -->
+  <script>
+am5.ready(function() {
+  // Chart 1: Stacked Column Chart (unchanged)
+  var root = am5.Root.new("chart1");
+  root.setThemes([am5themes_Animated.new(root)]);
+
+  var chart = root.container.children.push(
+    am5xy.XYChart.new(root, {
+      panX: false,
+      panY: false,
+      wheelX: "none",
+      wheelY: "none",
+      layout: root.verticalLayout,
+      paddingBottom: 50,
+      paddingTop: 15,
+      paddingLeft: 15,
+      paddingRight: 15
+    })
+  );
+
+  var data = [
+    { stage: "ES1", Opened: 383, Started: 318, Completed: 318 },
+    { stage: "ES2", Opened: 318, Started: 134, Completed: 134 },
+    { stage: "ES3", Opened: 134, Started: 117, Completed: 115 },
+    { stage: "ES4", Opened: 110, Started: 108, Completed: 106 }
+  ];
+
+  var xRenderer = am5xy.AxisRendererX.new(root, {
+    minGridDistance: 80,
+    cellStartLocation: 0.2,
+    cellEndLocation: 0.8,
+    strokeOpacity: 0
+  });
+
+  xRenderer.labels.template.setAll({
+    fontSize: 14,
+    fill: am5.color("#666666"),
+    fontFamily: "Segoe UI"
+  });
+
+  xRenderer.grid.template.set("visible", false);
+
+  var xAxis = chart.xAxes.push(
+    am5xy.CategoryAxis.new(root, {
+      categoryField: "stage",
+      renderer: xRenderer,
+      tooltip: am5.Tooltip.new(root, {})
+    })
+  );
+  xAxis.data.setAll(data);
+
+  var yRenderer = am5xy.AxisRendererY.new(root, {
+    strokeOpacity: 0
+  });
+
+  yRenderer.labels.template.setAll({
+    fontSize: 14,
+    fill: am5.color("#666666"),
+    fontFamily: "Segoe UI"
+  });
+
+  yRenderer.grid.template.setAll({
+    strokeOpacity: 0.1,
+    stroke: am5.color("#A0A0A0")
+  });
+
+  var yAxis = chart.yAxes.push(
+    am5xy.ValueAxis.new(root, {
+      renderer: yRenderer,
+      min: 0,
+      max: 900
+    })
+  );
+
+  var legend = chart.children.push(
+    am5.Legend.new(root, {
+      centerX: am5.percent(0),
+      x: am5.percent(0),
+      layout: am5.GridLayout.new(root, {
+        maxColumns: 1,
+        fixedWidthGrid: false
+      }),
+      paddingTop: 20,
+      paddingBottom: 10
+    })
+  );
+
+  legend.labels.template.setAll({
+    fontSize: 16,
+    fill: am5.color("#666666"),
+    fontFamily: "Segoe UI"
+  });
+
+  legend.markers.template.setAll({
+    width: 12,
+    height: 12
+  });
+
+  function createSeries(name, field, color) {
+    // Calculate totals for each stage
+    let totals = {};
+    data.forEach(item => {
+      totals[item.stage] = (totals[item.stage] || 0) + item[field];
+    });
+
+    var series = chart.series.push(
+      am5xy.ColumnSeries.new(root, {
+        name: name,
+        xAxis: xAxis,
+        yAxis: yAxis,
+        valueYField: field,
+        categoryXField: "stage",
+        clustered: true
+      })
+    );
+
+    series.columns.template.setAll({
+      width: am5.percent(85),
+      fill: am5.color(color),
+      stroke: am5.color(color),
+      cornerRadiusTL: 3,
+      cornerRadiusTR: 3
+    });
+
+    // Preprocess data to calculate accurate 100% percentages
+    data.forEach(row => {
+      const total = row.Opened + row.Started + row.Completed;
+      const rawPercents = {
+        Opened: (row.Opened / total) * 100,
+        Started: (row.Started / total) * 100,
+        Completed: (row.Completed / total) * 100
+      };
+
+      // Round down all values
+      let rounded = {
+        Opened: Math.floor(rawPercents.Opened),
+        Started: Math.floor(rawPercents.Started),
+        Completed: Math.floor(rawPercents.Completed)
+      };
+
+      let sum = rounded.Opened + rounded.Started + rounded.Completed;
+
+      // Distribute remaining percentage to highest remainder
+      let remainders = [
+        { key: "Opened", value: rawPercents.Opened - rounded.Opened },
+        { key: "Started", value: rawPercents.Started - rounded.Started },
+        { key: "Completed", value: rawPercents.Completed - rounded.Completed }
+      ];
+
+      remainders.sort((a, b) => b.value - a.value); // sort by biggest remainder
+
+      let i = 0;
+      while (sum < 100 && i < remainders.length) {
+        rounded[remainders[i].key]++;
+        sum++;
+        i++;
+      }
+
+      // Attach to row
+      row.OpenedPercent = `${rounded.Opened}%`;
+      row.StartedPercent = `${rounded.Started}%`;
+      row.CompletedPercent = `${rounded.Completed}%`;
+    });
+
+    // Set dynamic tooltip with percentage
+    series.columns.template.adapters.add("tooltipText", function(text, target) {
+      const dataItem = target.dataItem.dataContext;
+      let percentField = field + "Percent"; // e.g., "OpenedPercent"
+      return `${name}: ${dataItem[field]} (${dataItem[percentField]})`;
+    });
+
+    series.columns.template.set("tooltip", am5.Tooltip.new(root, {
+      pointerOrientation: "vertical",
+      getFillFromSprite: true,
+      getStrokeFromSprite: true,
+      autoTextColor: true,
+      paddingTop: 6,
+      paddingBottom: 6,
+      paddingLeft: 10,
+      paddingRight: 10
+    }));
+
+    series.columns.template.states.create("hover", {
+      fillOpacity: 0.8
+    });
+
+    series.data.setAll(data);
+    series.appear();
+
+    legend.data.push(series);
+    return series;
+  }
+
+  createSeries("Opened Notification", "Opened", "#8FD2D2");
+  createSeries("Opened the Survey", "Started", "#4A90E2");
+  createSeries("Completed the Survey", "Completed", "#0E3F2D");
+
+  chart.appear(1000, 100);
+
+  // Chart 2: Donut/Ring Chart for Professional Status (with createSeries function)
+  // Placeholder datasets for ES1–ES4
+  const datasets = {
+    ES1: [
+      { category: "Continue Studies", value: 0 },
+      { category: "Look for Job", value: 0 },
+      { category: "No Activity", value: 0 },
+      { category: "Have a Job", value: 0 }
+    ],
+    ES2: [
+      { category: "Continue Studies", value: 4 },
+      { category: "Look for Job", value: 20 },
+      { category: "No Activity", value: 5 },
+      { category: "Have a Job", value: 105 }
+    ],
+    ES3: [
+      { category: "Continue Studies", value: 5 },
+      { category: "Look for Job", value: 12 },
+      { category: "No Activity", value: 3 },
+      { category: "Have a Job", value: 95 }
+    ],
+    ES4: [
+      { category: "Continue Studies", value: 4 },
+      { category: "Look for Job", value: 4 },
+      { category: "No Activity", value: 3 },
+      { category: "Have a Job", value: 95 }
+    ]
+  };
+
+  var root2 = am5.Root.new("chart2");
+  root2.setThemes([am5themes_Animated.new(root2)]);
+
+  var chart2 = root2.container.children.push(
+    am5percent.PieChart.new(root2, {
+      layout: root2.verticalLayout,
+      innerRadius: am5.percent(50),
+      radius: am5.percent(80),
+      paddingTop: 15,
+      paddingBottom: 50,
+      paddingLeft: 15,
+      paddingRight: 15
+    })
+  );
+
+  var legend2 = chart2.children.push(
+    am5.Legend.new(root2, {
+      centerX: am5.percent(0),
+      x: am5.percent(0),
+      layout: am5.GridLayout.new(root2, {
+        maxColumns: 2,
+        fixedWidthGrid: false
+      }),
+      paddingTop: 40,
+      paddingBottom: 10
+    })
+  );
+  legend2.labels.template.setAll({
+    fontSize: 16,
+    fill: am5.color("#666666"),
+    fontFamily: "Segoe UI"
+  });
+  legend2.labels.template.adapters.add("text", function(text, target) {
+    const dataItem = target.dataItem;
+    if (dataItem) {
+      const category = dataItem.get("category");
+      return `${category}`;
+    }
+    return text;
+  });
+  legend2.valueLabels.template.set("forceHidden", true);
+  legend2.markers.template.setAll({ width: 12, height: 12 });
+
+  var series; // Global reference to update later
+  var totalLabel;
+
+  function createSeries2(data) {
+    let total = data.reduce((sum, item) => sum + item.value, 0);
+
+    // Clear old series and total label
+    // Remove old series
+    chart2.series.each(s => {
+      s.dispose();
+    });
+    chart2.series.clear();
+
+    series = chart2.series.push(
+      am5percent.PieSeries.new(root2, {
+        name: "Professional Status",
+        valueField: "value",
+        categoryField: "category",
+        alignLabels: false
+      })
+    );
+
+    series.slices.template.setAll({
+      fillOpacity: 0.9,
+      stroke: am5.color("#FFFFFF"),
+      strokeWidth: 1.5,
+      cornerRadius: 6,
+      tooltipText: "{category}: {value} ({valuePercentTotal.formatNumber('0')}%)"
+    });
+
+    series.slices.template.adapters.add("tooltipText", function(text, target) {
+      const dataItem = target.dataItem;
+      if (dataItem) {
+        const category = dataItem.get("category");
+        const value = dataItem.get("value");
+        const percent = Math.round(dataItem.get("valuePercentTotal"));
+        return `${category}: ${value} ${percent}%`;
+      }
+      return text;
+    });
+
+    series.ticks.template.set("visible", false);
+
+    series.slices.template.adapters.add("fill", function(fill, target) {
+      var category = target.dataItem.get("category");
+      if (category === "Continue Studies") return am5.color("#8FD2D2");
+      if (category === "Have a Job") return am5.color("#15616D");
+      if (category === "Look for Job") return am5.color("#0E3F2D");
+      if (category === "No Activity") return am5.color("#A0A0A0");
+      return fill;
+    });
+
+    series.labels.template.setAll({
+      text: "{valuePercentTotal.formatNumber('0.0')}%",
+      fontSize: 14,
+      fill: am5.color("#666666"),
+      fontFamily: "Segoe UI"
+    });
+
+    series.labels.template.adapters.add("text", function(text, target) {
+      const dataItem = target.dataItem;
+      if (dataItem) {
+        const category = dataItem.get("category");
+        const percent = Math.round(dataItem.get("valuePercentTotal"));
+        return `${percent}%`;
+      }
+      return text;
+    });
+
+    series.data.setAll(data);
+    legend2.data.setAll(series.dataItems);
+    series.appear();
+
+    const label = chart2.children._values.filter(child => {
+      return child.get("id") === "totalLabel";
+    })[0];
+
+    if (label) {
+      label.set("text", "Total Data : " + total);
+    } else {
+      totalLabel = chart2.children.push(
+        am5.Label.new(root2, {
+          id: "totalLabel", // or use custom property like `custom: "totalLabel"`
+          text: "Total Data : " + total,
+          fontSize: 14,
+          fontWeight: "600",
+          fill: am5.color("#0E3F2D"),
+          fontFamily: "Segoe UI",
+          centerX: am5.percent(0),
+          x: am5.percent(0),
+          y: am5.percent(85),
+          dy: 30
+        })
+      );
+    }
+  }
+
+  // Initial load with ES2
+  createSeries2(datasets["ES2"]);
+
+  // Handle tab switching
+  document.querySelectorAll(".tab-button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab-button").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const tab = btn.getAttribute("data-tab");
+      createSeries2(datasets[tab]);
+    });
+  });
+
+  // Chart 3: Type de Contrat (Horizontal Bar Chart)
+  var root3 = am5.Root.new("chart3");
+  root3.setThemes([am5themes_Animated.new(root3)]);
+
+  var chart3 = root3.container.children.push(
+      am5xy.XYChart.new(root3, {
+          layout: root3.verticalLayout,
+          paddingTop: 20,
+          paddingBottom: 50
+      })
+  );
+
+  // Define a custom color set for Chart 3 (softer, unique colors)
+  chart3.get("colors").set("colors", [
+    am5.color("#2A8A8A"), // Teal (logo and UI primary)
+    am5.color("#68B3B3"), // Light teal (background gradient/shade)
+    am5.color("#BCDCDC"), // Pale teal (UI backgrounds)
+    am5.color("#0E4B4B"), // Deep teal (contrast tone from logo)
+    am5.color("#7FD6D6"), // Accent aqua (highlight in UI)
+    am5.color("#D8F1F1"), // Very light mint (soft fill)
+    am5.color("#3D5A80"), // Slate blue (supportive tone)
+    am5.color("#9DBFCC"), // Desaturated blue
+    am5.color("#E0F7F7"), // Frost (background/soft fill)
+    am5.color("#194747")  // Dark accent (for text contrast)
+  ]);
+
+
+  // Raw data
+  const datasets3 = {
+    ES1: [
+      { type: "CDI", value: 0 },
+      { type: "CDD", value: 0 },
+      { type: "Intérim", value: 0 },
+      { type: "Fonctionnaire", value: 0 },
+      { type: "Contractuel", value: 0 },
+      { type: "Auto-Entrepreneur", value: 0 },
+      { type: "Gérant", value: 0 },
+      { type: "Indépendant", value: 0 },
+      { type: "Mandataire Social", value: 0 },
+      { type: "Autre", value: 0 }
+    ],
+    ES2: [
+      { type: "CDI", value: 63 },
+      { type: "CDD", value: 9 },
+      { type: "Intérim", value: 7 },
+      { type: "Fonctionnaire", value: 1 },
+      { type: "Contractuel", value: 3 },
+      { type: "Auto-Entrepreneur", value: 15 },
+      { type: "Gérant", value: 3 },
+      { type: "Indépendant", value: 2 },
+      { type: "Mandataire Social", value: 0 },
+      { type: "Autre", value: 2 }
+    ], // Use your current data
+    ES3: [
+      { type: "CDI", value: 58 },
+      { type: "CDD", value: 11 },
+      { type: "Intérim", value: 3 },
+      { type: "Fonctionnaire", value: 1 },
+      { type: "Contractuel", value: 1 },
+      { type: "Auto-Entrepreneur", value: 15 },
+      { type: "Gérant", value: 5 },
+      { type: "Indépendant", value: 1 },
+      { type: "Mandataire Social", value: 0 },
+      { type: "Autre", value: 0 }
+    ], // Your ES3 data
+    ES4: [
+      { type: "CDI", value: 64 },
+      { type: "CDD", value: 9 },
+      { type: "Intérim", value: 0 },
+      { type: "Fonctionnaire", value: 1 },
+      { type: "Contractuel", value: 1 },
+      { type: "Auto-Entrepreneur", value: 10 },
+      { type: "Gérant", value: 4 },
+      { type: "Indépendant", value: 3 },
+      { type: "Mandataire Social", value: 0 },
+      { type: "Autre", value: 1 }
+    ]  // Your ES4 data
+  };
+
+  let series3;
+  let yAxis3;
+  let totalLabel3;
+
+  function createSeries3(rawData) {
+    let total = rawData.reduce((sum, item) => sum + item.value, 0);
+    let data3 = rawData.map((item, index) => ({
+      ...item,
+      percent: Math.round((item.value / total) * 100),
+      index: index
+    }));
+
+    if (series3) {
+      series3.dispose();
+      chart3.series.clear();
+    }
+    if (yAxis3) {
+      yAxis3.dispose();
+      chart3.yAxes.clear();
+    }
+
+    yAxis3 = chart3.yAxes.push(
+      am5xy.CategoryAxis.new(root3, {
+        categoryField: "type",
+        renderer: am5xy.AxisRendererY.new(root3, {
+          minGridDistance: 10,
+          inversed: true
+        })
+      })
+    );
+    yAxis3.data.setAll(data3);
+
+    series3 = chart3.series.push(
+      am5xy.ColumnSeries.new(root3, {
+        name: "Type de contrat",
+        xAxis: xAxis3,
+        yAxis: yAxis3,
+        valueXField: "value",
+        categoryYField: "type"
+      })
+    );
+
+    series3.columns.template.setAll({
+      height: am5.percent(70),
+      cornerRadiusTL: 6,
+      cornerRadiusBL: 6,
+      strokeOpacity: 1,
+      tooltipText: "{categoryY}: {valueX} ({percent}%)",
+      fillOpacity: 0.9,
+      strokeOpacity: 0.3
+    });
+
+    series3.columns.template.adapters.add("fill", function (fill, target) {
+      return chart3.get("colors").getIndex(series3.columns.indexOf(target));
+    });
+
+    series3.columns.template.adapters.add("stroke", function (stroke, target) {
+      return chart3.get("colors").getIndex(series3.columns.indexOf(target));
+    });
+
+    series3.data.setAll(data3);
+
+    if (totalLabel3) {
+      totalLabel3.set("text", "Total Data : " + total);
+    } else {
+      totalLabel3 = chart3.children.push(
+        am5.Label.new(root3, {
+          id: "totalLabel3",
+          text: "Total Data : " + total,
+          fontSize: 14,
+          fontWeight: "600",
+          fill: am5.color("#0E3F2D"),
+          fontFamily: "Segoe UI",
+          centerX: am5.percent(0),
+          x: am5.percent(0),
+          y: am5.percent(85),
+          dy: 30
+        })
+      );
+    }
+
+    chart3.appear(1000, 100);
+  }
+
+  document.querySelectorAll(".tab-button3").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab-button3").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const tab = btn.getAttribute("data-tab");
+      createSeries3(datasets3[tab]);
+    });
+  });
+
+
+  const xAxis3 = chart3.xAxes.push(
+    am5xy.ValueAxis.new(root3, {
+      min: 0,
+      renderer: am5xy.AxisRendererX.new(root3, {})
+    })
+  );
+
+  // Initial load
+  createSeries3(datasets3["ES2"]);
+
+  // Chart 4: Manager Level (Donut Chart)
+  var root4 = am5.Root.new("chart4");
+  root4.setThemes([am5themes_Animated.new(root4)]);
+
+  var chart4 = root4.container.children.push(
+    am5percent.PieChart.new(root4, {
+      layout: root4.verticalLayout,
+      innerRadius: am5.percent(50),
+      height: 450, // ⬅️ Increased height
+      paddingTop: 15,
+      paddingBottom: 50,
+      paddingLeft: 15,
+      paddingRight: 15
+    })
+  );
+
+  const datasets4 = {
+    ES1: [
+      { category: "Yes", value: 0 },
+      { category: "No", value: 0 }
+    ],
+    ES2: [
+      { category: "Yes", value: 12 },
+      { category: "No", value: 93 }
+    ],
+    ES3: [
+      { category: "Yes", value: 10 },
+      { category: "No", value: 85 }
+    ],
+    ES4: [
+      { category: "Yes", value: 10 },
+      { category: "No", value: 85 }
+    ]
+  };
+
+  // var total = data4.reduce((sum, item) => sum + item.value, 0);
+  // data4 = data4.map(item => ({
+  //   ...item,
+  //   // percent: ((item.value / total) * 100).toFixed(1)
+  //   percent: Math.round((item.value / total) * 100)
+  // }));
+
+  // Create legend
+  var legend4 = chart4.children.push(
+    am5.Legend.new(root4, {
+      centerX: am5.percent(0),
+      x: am5.percent(0),
+      layout: am5.GridLayout.new(root4, {
+        maxColumns: 2,
+        fixedWidthGrid: false
+      }),
+      paddingTop: 40,
+      paddingBottom: 10
+    })
+  );
+
+  legend4.labels.template.setAll({
+    fontSize: 16,
+    fill: am5.color("#666666"),
+    fontFamily: "Segoe UI"
+  });
+
+  legend4.valueLabels.template.set("forceHidden", true);
+
+  legend4.markers.template.setAll({
+    width: 12,
+    height: 12
+  });
+
+  let series4; // Global ref so we can dispose it when updating
+  let totalLabel4; // Reference for updating total label
+
+  function updateChart4(esKey) {
+    const data = datasets4[esKey];
+    const total = data.reduce((sum, item) => sum + item.value, 0);
+    const formattedData = data.map(item => ({
+      ...item,
+      percent: Math.round((item.value / total) * 100)
+    }));
+
+    // Dispose old series
+    if (series4) {
+      chart4.series.removeValue(series4);
+    }
+
+    // Create new series
+    series4 = chart4.series.push(
+      am5percent.PieSeries.new(root4, {
+        name: "Manager Level",
+        valueField: "value",
+        categoryField: "category",
+        alignLabels: false
+      })
+    );
+
+    series4.slices.template.setAll({
+      stroke: am5.color("#fff"),
+      strokeWidth: 1.5,
+      tooltipText: "{category}: {value} ({percent}%)",
+      cornerRadius: 6
+    });
+
+    series4.slices.template.adapters.add("fill", function (fill, target) {
+      const category = target.dataItem?.get("category");
+      if (category === "Yes") return am5.color("#15616D");
+      if (category === "No") return am5.color("#8FD2D2");
+      return fill;
+    });
+
+    if (total === 0) {
+      series4.labels.template.setAll({
+        text: "0%",
+        fontSize: 16,
+        fontWeight: "500",
+        fill: am5.color("#444")
+      });
+    } else {
+      series4.labels.template.setAll({
+        text: "{category} {percent}%",
+        fontSize: 16,
+        fontWeight: "500",
+        fill: am5.color("#444")
+      });
+    }
+
+
+    series4.data.setAll(formattedData);
+    legend4.data.setAll(series4.dataItems);
+    series4.appear(1000, 100);
+
+    // Update or add total label
+    if (totalLabel4) {
+      totalLabel4.set("text", "Total Data : " + total);
+    } else {
+      totalLabel4 = chart4.children.push(
+        am5.Label.new(root4, {
+          text: "Total Data : " + total,
+          fontSize: 14,
+          fontWeight: "600",
+          fill: am5.color("#0E3F2D"),
+          fontFamily: "Segoe UI",
+          centerX: am5.percent(0),
+          x: am5.percent(0),
+          y: am5.percent(85),
+          dy: 30
+        })
+      );
+    }
+  }
+
+  // Tab switching for Chart 4
+  document.querySelectorAll(".tab-button4").forEach(button => {
+    button.addEventListener("click", () => {
+      const esKey = button.getAttribute("data-tab");
+
+      // Update chart
+      updateChart4(esKey);
+
+      // Update active state
+      document.querySelectorAll(".tab-button4").forEach(btn =>
+        btn.classList.remove("active")
+      );
+      button.classList.add("active");
+    });
+  });
+
+  // Default chart load
+  updateChart4("ES2");
+
+  // createSeries4("Manager Level", data4);
+  chart4.appear(1000, 100);
+
+  // Chart 5: Top 8 Job Roles with tabs and dynamic update
+  var root5 = am5.Root.new("chart5");
+  root5.setThemes([am5themes_Animated.new(root5)]);
+
+  var chart5 = root5.container.children.push(
+    am5xy.XYChart.new(root5, {
+      layout: root5.verticalLayout,
+      panX: false,
+      panY: false,
+      wheelX: "none",
+      wheelY: "none",
+      paddingTop: 15,
+      paddingBottom: 50,
+      paddingLeft: 15,
+      paddingRight: 15
+    })
+  );
+
+  // Mock datasets per ES
+  const datasets5 = {
+    ES1: [
+      { category: "Sales representative", value: 0 },
+      { category: "Communications Officer", value: 0 },
+      { category: "Marketing research officer", value: 0 },
+      { category: "Market Manager", value: 0 },
+      { category: "Marketing Manager", value: 0 },
+      { category: "Brand Manager", value: 0 },
+      { category: "Product Manager", value: 0 },
+      { category: "Marketing Project Manager", value: 0 },
+      { category: "Sector Manager", value: 0 },
+      { category: "Commercial", value: 0 },
+      { category: "Sales Advisor", value: 0 },
+      { category: "Sales Manager", value: 0 },
+      { category: "Sales Director", value: 0 },
+      { category: "Marketing and Sales Performance Manager", value: 0 },
+      { category: "Department/Universe Manager", value: 0 },
+      { category: "Marketing Research Manager", value: 0 },
+      { category: "Other", value: 0 }
+    ],
+    ES2: [
+      { category: "Sales representative", value: 3 },
+      { category: "Communications Officer", value: 1 },
+      { category: "Marketing research officer", value: 0 },
+      { category: "Market Manager", value: 0 },
+      { category: "Marketing Manager", value: 0 },
+      { category: "Brand Manager", value: 0 },
+      { category: "Product Manager", value: 0 },
+      { category: "Marketing Project Manager", value: 0 },
+      { category: "Sector Manager", value: 3 },
+      { category: "Commercial", value: 19 },
+      { category: "Sales Advisor", value: 24 },
+      { category: "Sales Manager", value: 4 },
+      { category: "Sales Director", value: 1 },
+      { category: "Marketing and Sales Performance Manager", value: 0 },
+      { category: "Department/Universe Manager", value: 1 },
+      { category: "Marketing Research Manager", value: 1 },
+      { category: "Other", value: 48 }
+    ],
+    ES3: [
+      { category: "Sales representative", value: 3 },
+      { category: "Communications Officer", value: 0 },
+      { category: "Marketing research officer", value: 0 },
+      { category: "Market Manager", value: 0 },
+      { category: "Marketing Manager", value: 0 },
+      { category: "Brand Manager", value: 0 },
+      { category: "Product Manager", value: 0 },
+      { category: "Marketing Project Manager", value: 1 },
+      { category: "Sector Manager", value: 2 },
+      { category: "Commercial", value: 20 },
+      { category: "Sales Advisor", value: 21 },
+      { category: "Sales Manager", value: 5 },
+      { category: "Sales Director", value: 0 },
+      { category: "Marketing and Sales Performance Manager", value: 0 },
+      { category: "Department/Universe Manager", value: 1 },
+      { category: "Marketing Research Manager", value: 0 },
+      { category: "Other", value: 42 }
+    ],
+    ES4: [
+      { category: "Sales representative", value: 4 },
+      { category: "Communications Officer", value: 1 },
+      { category: "Marketing research officer", value: 0 },
+      { category: "Market Manager", value: 0 },
+      { category: "Marketing Manager", value: 0 },
+      { category: "Brand Manager", value: 0 },
+      { category: "Product Manager", value: 0 },
+      { category: "Marketing Project Manager", value: 0 },
+      { category: "Sector Manager", value: 0 },
+      { category: "Commercial", value: 14 },
+      { category: "Sales Advisor", value: 19 },
+      { category: "Sales Manager", value: 5 },
+      { category: "Sales Director", value: 1 },
+      { category: "Marketing and Sales Performance Manager", value: 0 },
+      { category: "Department/Universe Manager", value: 1 },
+      { category: "Marketing Research Manager", value: 0 },
+      { category: "Other", value: 48 }
+    ]
+  };
+
+  let yAxis5, xAxis5, series5, totalLabel5;
+
+  function updateChart5(esKey) {
+    const rawData = datasets5[esKey];
+
+    const totalData = rawData.reduce((sum, item) => sum + item.value, 0);
+    const sorted = [...rawData].sort((a, b) => b.value - a.value);
+    const topData = sorted.slice(0, 8);
+
+    const topTotal = topData.reduce((sum, item) => sum + item.value, 0);
+    const percentage = Math.round((topTotal / totalData) * 100);
+
+    const dataWithPercent = topData.map(item => ({
+      ...item,
+      percent: Math.round((item.value / totalData) * 100)
+    }));
+
+    if (!yAxis5) {
+      yAxis5 = chart5.yAxes.push(
+        am5xy.CategoryAxis.new(root5, {
+          categoryField: "category",
+          renderer: am5xy.AxisRendererY.new(root5, {
+            inversed: true,
+            cellStartLocation: 0.1,
+            cellEndLocation: 0.9,
+            minGridDistance: 10
+          })
+        })
+      );
+
+      yAxis5.get("renderer").labels.template.setAll({
+        fontSize: 14,
+        fill: am5.color("#666666"),
+        fontFamily: "Segoe UI"
+      });
+    }
+
+    if (!xAxis5) {
+      xAxis5 = chart5.xAxes.push(
+        am5xy.ValueAxis.new(root5, {
+          min: 0,
+          renderer: am5xy.AxisRendererX.new(root5, {})
+        })
+      );
+
+      xAxis5.get("renderer").labels.template.setAll({
+        fontSize: 14,
+        fill: am5.color("#666666"),
+        fontFamily: "Segoe UI"
+      });
+    }
+
+    if (series5) {
+      chart5.series.removeValue(series5);
+    }
+
+    series5 = chart5.series.push(
+      am5xy.ColumnSeries.new(root5, {
+        name: "Roles",
+        xAxis: xAxis5,
+        yAxis: yAxis5,
+        valueXField: "value",
+        categoryYField: "category"
+      })
+    );
+
+    series5.columns.template.setAll({
+      cornerRadiusTL: 5,
+      cornerRadiusBL: 5,
+      fillOpacity: 0.9,
+      strokeOpacity: 0.3,
+      height: am5.percent(70),
+      tooltipText: "{categoryY}: {valueX} ({percent}%)",
+      tooltip: am5.Tooltip.new(root5, {
+        pointerOrientation: "vertical",
+        getFillFromSprite: true,
+        autoTextColor: true,
+        paddingTop: 6,
+        paddingBottom: 6,
+        paddingLeft: 10,
+        paddingRight: 10
+      })
+    });
+
+    series5.columns.template.adapters.add("fill", function (fill, target) {
+      return chart5.get("colors").getIndex(series5.columns.indexOf(target));
+    });
+
+    series5.columns.template.adapters.add("stroke", function (stroke, target) {
+      return chart5.get("colors").getIndex(series5.columns.indexOf(target));
+    });
+
+    series5.columns.template.set("interactive", true);
+
+    yAxis5.data.setAll(dataWithPercent);
+    series5.data.setAll(dataWithPercent);
+    series5.appear(1000);
+
+    if (totalLabel5) {
+      totalLabel5.set("text", `Data : ${topTotal} / ${percentage ? percentage : 0}%`);
+    } else {
+      totalLabel5 = chart5.children.push(
+        am5.Label.new(root5, {
+          text: `Data : ${topTotal} / ${percentage}%`,
+          fontSize: 14,
+          fontWeight: "600",
+          fill: am5.color("#0E3F2D"),
+          fontFamily: "Segoe UI",
+          centerX: am5.percent(0),
+          x: am5.percent(0),
+          y: am5.percent(85),
+          dy: 30
+        })
+      );
+    }
+  }
+
+  document.querySelectorAll(".tab-button5").forEach(button => {
+    button.addEventListener("click", () => {
+      document.querySelectorAll(".tab-button5").forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
+
+      const esKey = button.getAttribute("data-tab");
+      updateChart5(esKey);
+    });
+  });
+
+  updateChart5("ES2"); // Initial render
+
+
+
+  // Chart 6: Top 8 Companies (Bar Chart with Logos)
+  // Chart 6: Top 8 Companies (Circle Layout with Logos) - HTML/CSS Solution
+  // Clear the chart container and replace with HTML
+  document.getElementById('chart6').innerHTML = `
+    <style>
+      .company-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 20px;
+        gap: 15px; /* Reduced gap to prevent excessive spacing */
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .company-item {
+        display: flex;
+        padding-top: 20px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        
+        flex: 1 1 160px; /* flex-grow, flex-shrink, flex-basis */
+        max-width: 25%;   /* Max 5 per row on large screens */
+        box-sizing: border-box;
+      }
+
+      .company-item:hover {
+        transform: scale(1.05);
+      }
+
+      .company-circle {
+        /* Use percentage-based sizing relative to the parent */
+        width: 80%;
+        aspect-ratio: 1 / 1; /* Ensure the circle stays circular */
+        max-width: 130px; /* Maximum size for larger screens */
+        border: 0px solid #8FD2D2;
+        border-radius: 50%;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: border-width 0.2s ease;
+      }
+
+      .company-item:hover .company-circle {
+        border-width: 4px;
+      }
+
+      .company-logo {
+        max-width: 60%;
+        max-height: 60%;
+        height: auto;
+        object-fit: contain;
+      }
+
+      .company-count {
+        font-size: clamp(10px, 1.5vw, 16px);
+        font-weight: bold;
+        color: #0E3F2D;
+        margin-bottom: 2px;
+        text-align: center;
+      }
+
+      .company-percent {
+        font-size: clamp(8px, 1.2vw, 13px);
+        color: #666666;
+        text-align: center;
+      }
+
+      .company-name {
+        font-size: clamp(8px, 1vw, 12px);
+        color: #888888;
+        text-align: center;
+        margin-top: 5px;
+      }
+
+      /* Media queries for better control at different screen sizes */
+      @media (max-width: 800px) {
+        .company-item {
+          width: calc(25% - 15px); /* 4 items per row */
+          min-width: 90px;
+        }
+
+        .company-circle {
+          width: 75%;
+          max-width: 100px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .company-item {
+          width: calc(33.33% - 15px); /* 3 items per row */
+          min-width: 80px;
+        }
+
+        .company-circle {
+          width: 70%;
+          max-width: 90px;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .company-item {
+          width: calc(50% - 15px); /* 2 items per row */
+          min-width: 70px;
+        }
+
+        .company-circle {
+          width: 65%;
+          max-width: 80px;
+        }
+      }
+    </style>
+    
+    <div class="company-grid" id="companyGrid">
+      <!-- Companies will be inserted here -->
+    </div>
+  `;
+
+  // Company data
+  // var data6 = [
+  //   { company: "Google", value: 120, logo: "https://upload.wikimedia.org/wikipedia/commons/b/b0/Darty.svg" },
+  //   { company: "Microsoft", value: 110, logo: "https://www.decathlon.media/app/fo-html/vues/commun/img/commun/logo-decathlon.svg" },
+  //   { company: "Amazon", value: 95, logo: "https://upload.wikimedia.org/wikipedia/fr/c/cd/Logo_Auchan_%282015%29.svg" },
+  //   { company: "Apple", value: 90, logo: "https://upload.wikimedia.org/wikipedia/fr/3/3b/Logo_Carrefour.svg" },
+  //   { company: "Meta", value: 85, logo: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Pernod_Ricard_logo_2019.svg" },
+  //   { company: "Netflix", value: 80, logo: "https://upload.wikimedia.org/wikipedia/commons/9/94/AXA_Logo.svg" },
+  //   { company: "Tesla", value: 75, logo: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Soci%C3%A9t%C3%A9_G%C3%A9n%C3%A9rale.svg" },
+  //   { company: "IBM", value: 70, logo: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" }
+  // ];
+
+  // Company datasets per ES
+  const datasets6 = {
+    ES1: [
+      { company: "Darty", value: 0, logo: "https://upload.wikimedia.org/wikipedia/commons/b/b0/Darty.svg" },
+      { company: "Decathlon", value: 0, logo: "https://www.decathlon.media/app/fo-html/vues/commun/img/commun/logo-decathlon.svg" },
+      { company: "Auchan", value: 0, logo: "https://upload.wikimedia.org/wikipedia/fr/c/cd/Logo_Auchan_%282015%29.svg" },
+      { company: "Carrefour", value: 0, logo: "https://upload.wikimedia.org/wikipedia/fr/3/3b/Logo_Carrefour.svg" },
+      { company: "Pernod Ricard", value: 0, logo: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Pernod_Ricard_logo_2019.svg" },
+      { company: "AXA Assurances", value: 0, logo: "https://upload.wikimedia.org/wikipedia/commons/9/94/AXA_Logo.svg" },
+      { company: "Société Générale", value: 0, logo: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Soci%C3%A9t%C3%A9_G%C3%A9n%C3%A9rale.svg" },
+      { company: "Orange", value: 0, logo: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" },
+      // { company: "Other", value: 0, logo: "https://www.svgrepo.com/show/490660/company.svg" }
+    ],
+    ES2: [
+      { company: "Darty", value: 4, logo: "https://upload.wikimedia.org/wikipedia/commons/b/b0/Darty.svg" },
+      { company: "Decathlon", value: 9, logo: "https://www.decathlon.media/app/fo-html/vues/commun/img/commun/logo-decathlon.svg" },
+      { company: "Auchan", value: 5, logo: "https://upload.wikimedia.org/wikipedia/fr/c/cd/Logo_Auchan_%282015%29.svg" },
+      { company: "Carrefour", value: 4, logo: "https://upload.wikimedia.org/wikipedia/fr/3/3b/Logo_Carrefour.svg" },
+      { company: "Pernod Ricard", value: 4, logo: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Pernod_Ricard_logo_2019.svg" },
+      { company: "AXA Assurances", value: 5, logo: "https://upload.wikimedia.org/wikipedia/commons/9/94/AXA_Logo.svg" },
+      { company: "Société Générale", value: 5, logo: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Soci%C3%A9t%C3%A9_G%C3%A9n%C3%A9rale.svg" },
+      { company: "Orange", value: 6, logo: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" },
+      // { company: "Other", value: 65, logo: "https://www.svgrepo.com/show/490660/company.svg" }
+    ],
+    ES3: [
+      { company: "Darty", value: 6, logo: "https://upload.wikimedia.org/wikipedia/commons/b/b0/Darty.svg" },
+      { company: "Decathlon", value: 11, logo: "https://www.decathlon.media/app/fo-html/vues/commun/img/commun/logo-decathlon.svg" },
+      { company: "Auchan", value: 6, logo: "https://upload.wikimedia.org/wikipedia/fr/c/cd/Logo_Auchan_%282015%29.svg" },
+      { company: "Carrefour", value: 7, logo: "https://upload.wikimedia.org/wikipedia/fr/3/3b/Logo_Carrefour.svg" },
+      { company: "Pernod Ricard", value: 4, logo: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Pernod_Ricard_logo_2019.svg" },
+      { company: "AXA Assurances", value: 6, logo: "https://upload.wikimedia.org/wikipedia/commons/9/94/AXA_Logo.svg" },
+      { company: "Société Générale", value: 8, logo: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Soci%C3%A9t%C3%A9_G%C3%A9n%C3%A9rale.svg" },
+      { company: "Orange", value: 8, logo: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" },
+      // { company: "Other", value: 0, logo: "https://www.svgrepo.com/show/490660/company.svg" }
+    ],
+    ES4: [
+      { company: "Darty", value: 6, logo: "https://upload.wikimedia.org/wikipedia/commons/b/b0/Darty.svg" },
+      { company: "Decathlon", value: 11, logo: "https://www.decathlon.media/app/fo-html/vues/commun/img/commun/logo-decathlon.svg" },
+      { company: "Auchan", value: 8, logo: "https://upload.wikimedia.org/wikipedia/fr/c/cd/Logo_Auchan_%282015%29.svg" },
+      { company: "Carrefour", value: 8, logo: "https://upload.wikimedia.org/wikipedia/fr/3/3b/Logo_Carrefour.svg" },
+      { company: "Pernod Ricard", value: 7, logo: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Pernod_Ricard_logo_2019.svg" },
+      { company: "AXA Assurances", value: 4, logo: "https://upload.wikimedia.org/wikipedia/commons/9/94/AXA_Logo.svg" },
+      { company: "Société Générale", value: 7, logo: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Soci%C3%A9t%C3%A9_G%C3%A9n%C3%A9rale.svg" },
+      { company: "Orange", value: 9, logo: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" },
+      // { company: "Other", value: 0, logo: "https://www.svgrepo.com/show/490660/company.svg" }
+    ]
+  };
+
+  function renderCompaniesChart(esKey) {
+    const data = datasets6[esKey];
+    const sorted = [...data].sort((a, b) => b.value - a.value);
+    const top8 = sorted.slice(0, 8);
+
+    const topTotal = top8.reduce((sum, item) => sum + item.value, 0);
+    const total = 105;
+    const percentage = Math.round((topTotal / total) * 100);
+
+    // Update title
+    document.getElementById('chart6-title').innerText = `Top 8 Companies : ${topTotal} / ${percentage}%`;
+
+    // Clear previous content
+    const companyGrid = document.getElementById('companyGrid');
+    companyGrid.innerHTML = "";
+
+    // Add percent to each company
+    top8.forEach(company => {
+      const companyItem = document.createElement('div');
+      companyItem.className = 'company-item';
+      const percent = Math.round((company.value / total) * 100);
+
+      companyItem.innerHTML = `
+        <div class="company-circle">
+          <img src="${company.logo}" alt="${company.company}" class="company-logo" onerror="this.style.display='none'">
+        </div>
+        <div class="company-count">${company.value}</div>
+        <div class="company-percent">${percent}%</div>
+        <div class="company-name">${company.company}</div>
+      `;
+
+      companyItem.title = `${company.company}: ${company.value} students (${percent}%)`;
+
+      companyItem.addEventListener("click", () => {
+        console.log(`Clicked on ${company.company}: ${company.value} students`);
+      });
+
+      companyGrid.appendChild(companyItem);
+    });
+  }
+
+  renderCompaniesChart("ES2"); // Initial render
+
+  document.querySelectorAll(".tab-button6").forEach(button => {
+    button.addEventListener("click", () => {
+      document.querySelectorAll(".tab-button6").forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
+
+      const esKey = button.getAttribute("data-tab");
+      renderCompaniesChart(esKey);
+    });
+  });
+
+});
+</script>
+</body>
+</html>
