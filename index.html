@@ -212,6 +212,16 @@
         grid-template-columns: 1fr; /* Stack on smaller screens */
       }
     }
+    .grid3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* ⬅️ 3 fixed columns */
+      gap: 20px;
+    }
+    @media (max-width: 1000px) {
+      .grid3 {
+        grid-template-columns: 1fr; /* Stack on smaller screens */
+      }
+    }
     .chart-box {
       background: white;
       padding: 15px;
@@ -631,6 +641,42 @@
         <h3 style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 18px; font-weight: 600; color: #00454D; margin-bottom: 10px;"><strong>Taux de satisfaction de la formation</strong></h3>
         <p style="padding-top: 10px; color:#1E9180 ; font-size: 40px;"><strong>73%</strong></p>
         <!-- <p style="color:#49928a; padding-bottom: 25px;"><strong>72.68%</strong></p> -->
+      </div>
+    </div>
+
+    <hr style="border: none; border-top: 2px solid #D0E6E6; margin: 30px 0;">
+
+    <div class="grid3" style="margin-bottom: 20px;">
+      <div class="chart-box" style="text-align: center;">
+        <h3 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 18px; font-weight: 600; color: #00454D	; margin-bottom: 10px;"><strong>Poursuite d'études</strong></h3>
+        <p style="color:#1E9180 ; font-size: 40px;"><strong>56%</strong></p>
+        <!-- <p style="color:#49928a; padding-bottom: 25px;"><strong>27% (Basé sur ES2)</strong></p> -->
+      </div>
+
+      <div class="chart-box" style="text-align: center;">
+        <h3 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 18px; font-weight: 600; color: #00454D	; margin-bottom: 10px;"><strong>Domaine de Poursuite d'études</strong></h3>
+        <!-- <p style="padding-top: 10px; color: #1E9180 "><strong><span style="color:#2C8B7D	;"> 56%  </span></strong></p> -->
+        <table style="margin: 0 auto; text-align: center;"><thead>
+          <tr style="font-size: 15px; color: #6B7280 ">
+            <th style="padding-left: 5px;">Commerce / Affaires</th>
+            <th style="padding-left: 5px;">Management / Stratégie d’entreprise</th>
+            <th style="padding-left: 5px;">Ingénierie d’affaires</th>
+          </tr></thead>
+        <tbody>
+          <tr style="font-size: 13px; color: #159E8E	">
+            <td>31%</td>
+            <td>27%</td>
+            <td>13%</td>
+          </tr>
+        </tbody>
+        </table>
+        <!-- <p style="color:#49928a; padding-bottom: 25px;"><strong>27% (Basé sur ES2)</strong></p> -->
+      </div>
+
+      <div class="chart-box" style="text-align: center;">
+        <h3 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 18px; font-weight: 600; color: #00454D	; margin-bottom: 10px;"><strong>Niveau TOP cible BAC+5</strong></h3>
+        <p style="color:#1E9180 ; font-size: 40px;"><strong>80%</strong></p>
+        <!-- <p style="color:#49928a; padding-bottom: 25px;"><strong>27% (Basé sur ES2)</strong></p> -->
       </div>
     </div>
 
