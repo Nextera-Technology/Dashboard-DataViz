@@ -174,6 +174,10 @@
       font-size: 24px;
       color: var(--dark);
     }
+    header h4 {
+      /* font-size: 24px; */
+      color: var(--dark);
+    }
     .filters {
       display: flex;
       gap: 10px;
@@ -281,7 +285,7 @@
       height: 700px;
     }
     #chart6.chart-container {
-      height: 500px;
+      height: 480px;
     }
     #chart1.chart-container {
       height: 500px;
@@ -289,19 +293,20 @@
     #chart5.chart-container{
       height: 700px;
     }
-    /* #chart6 .company-grid {
+    #chart6 .company-grid {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-    } */
+      /* justify-content: space-between; */
+    }
 
-    /* #chart6 .company-item {
+    #chart6 .company-item {
       flex: 1 1 calc(25% - 10px);
       min-width: 80px;
-      max-width: 130px;
+      max-width: 150px;
       text-align: center;
-    } */
-
+      /* padding-bottom: 10px; */
+    }
     /* #chart6 .company-item img {
       width: 100%;
       height: auto;
@@ -409,6 +414,63 @@
       background-color: #15616D;
       color: #fff;
     }
+
+
+
+
+    .status-grid-columned {
+      display: flex;
+      gap: 16px;
+      margin-top: 20px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .status-column {
+      flex: 1;
+      min-width: 180px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .es-label {
+      font-weight: bold;
+      font-size: 17px;
+      color: #15616D;
+      margin-bottom: 4px;
+      text-align: center;
+    }
+
+    .status-card {
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      background-color: #f5f7fa;
+      color: #333;
+    }
+
+    /* Category Colors */
+    .emploi {
+      background-color: #E6F0F9;
+      border-left: 4px solid #457B9D;
+    }
+    .recherche {
+      background-color: #FAF2E6;
+      border-left: 4px solid #D69B5A;
+    }
+    .etudes {
+      background-color: #E6F7F4;
+      border-left: 4px solid #2A9D8F;
+    }
+    .inactif {
+      background-color: #F9E9EC;
+      border-left: 4px solid #A77A82;
+    }
+
   </style>
 </head>
 <body>
@@ -425,6 +487,21 @@
   <main class="content">
     <header>
       <h1>Enquête ouverte – Tableau de bord</h1>
+      <h4>EE1 : Diplomation &nbsp;| &nbsp;
+
+      <!-- </h4> -->
+      <!-- <h4> -->
+        EE2 : Après 6 mois &nbsp;| &nbsp;
+
+      <!-- </h4> -->
+      <!-- <h4> -->
+        EE3 : Après 12 mois &nbsp;| &nbsp;
+
+      <!-- </h4> -->
+      <!-- <h4> -->
+        EE4 : Après 24 mois
+
+      </h4>
       <!-- <div class="filters">
         <label for="cohort">Cohort:</label>
         <select id="cohort">
@@ -437,30 +514,125 @@
 
     <div class="grid2" style="margin-bottom: 20px;">
       <div class="chart-box" style="text-align: center;">
-        <h3 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 16px; font-weight: 600; color: #15616D; margin-bottom: 10px;"><strong>Poste le plus fréquent (ES1–ES4)</strong></h3>
-        <p style="padding-top: 20px;"><strong>Conseiller commercial</strong></p>
-        <p style="color:#49928a; padding-bottom: 25px;"><strong>27% (Basé sur ES2)</strong></p>
+        <h3 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 18px; font-weight: 600; color: #15616D; margin-bottom: 10px;"><strong>Postes</strong></h3>
+        <p style="padding-top: 10px;"><strong>Postes ciblés après 24 mois :<span style="color:#49928a;"> 42%  </span></strong></p>
+        <table style="margin: 0 auto; text-align: center;"><thead>
+          <tr style="font-size: 15px">
+            <th style="padding-left: 5px;">EE1</th>
+            <th style="padding-left: 5px;">EE2</th>
+            <th style="padding-left: 5px;">EE3</th>
+            <th style="padding-left: 5px;">EE4</th>
+          </tr></thead>
+        <tbody>
+          <tr style="font-size: 13px">
+            <td>0%</td>
+            <td>43%</td>
+            <td>46%</td>
+            <td>42%</td>
+          </tr>
+        </tbody>
+        </table>
+        <!-- <p style="color:#49928a; padding-bottom: 25px;"><strong>27% (Basé sur ES2)</strong></p> -->
       </div>
 
       <div class="chart-box" style="text-align: center;">
-        <h3 style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 16px; font-weight: 600; color: #15616D; margin-bottom: 10px;"><strong>Secteur d'activité principal (ES1–ES4)</strong></h3>
-        <p style="padding-top: 20px;"><strong>Immobilier</strong></p>
-        <p style="color:#49928a; padding-bottom: 25px;"><strong>19% (Basé sur ES3)</strong></p>
+        <h3 style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 18px; font-weight: 600; color: #15616D; margin-bottom: 10px;"><strong>Domaines</strong></h3>
+        <p style="padding-top: 10px;"><strong>Domaines ciblés après 24 mois :<span style="color:#49928a;"> 97%  </span></strong></p>
+        <table style="margin: 0 auto; text-align: center;"><thead>
+          <tr style="font-size: 15px">
+            <th style="padding-left: 5px;">EE1</th>
+            <th style="padding-left: 5px;">EE2</th>
+            <th style="padding-left: 5px;">EE3</th>
+            <th style="padding-left: 5px;">EE4</th>
+          </tr></thead>
+        <tbody>
+          <tr style="font-size: 13px">
+            <td>0%</td>
+            <td>71%</td>
+            <td>85%</td>
+            <td>97%</td>
+          </tr>
+        </tbody>
+        </table>
       </div>
 
       <div class="chart-box" style="text-align: center;">
-        <h3 style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 16px; font-weight: 600; color: #15616D; margin-bottom: 10px;"><strong>Fourchette salariale moyenne (ES1–ES4)</strong></h3>
-        <p style="padding-top: 20px;"><strong>Basé sur ES2</strong></p>
-        <p style="color:#49928a; padding-bottom: 25px;"><strong>1 600€ – 1 899€ (38.57%)</strong></p>
+        <h3 style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 18px; font-weight: 600; color: #15616D; margin-bottom: 10px;"><strong>Salaires</strong></h3>
+        <p style="padding-top: 10px;"><strong>Salaires ciblés après 24 mois :<span style="color:#49928a;"> 20%  </span></strong></p>
+        <table style="margin: 0 auto; text-align: center;"><thead>
+          <tr style="font-size: 15px">
+            <th style="padding-left: 5px;">EE1</th>
+            <th style="padding-left: 5px;">EE2</th>
+            <th style="padding-left: 5px;">EE3</th>
+            <th style="padding-left: 5px;">EE4</th>
+          </tr></thead>
+        <tbody>
+          <tr style="font-size: 13px">
+            <td>0%</td>
+            <td>16%</td>
+            <td>26%</td>
+            <td>20%</td>
+          </tr>
+        </tbody>
+        </table>
       </div>
 
-      <div class="chart-box" style="text-align: center;">
-        <h3 style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 16px; font-weight: 600; color: #15616D; margin-bottom: 10px;"><strong>Taux de satisfaction (ES1–ES4)</strong></h3>
-        <p style="padding-top: 20px;"><strong>Résultat</strong></p>
-        <p style="color:#49928a; padding-bottom: 25px;"><strong>72.68%</strong></p>
+      <div class="chart-box">
+        <h3 style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 18px; font-weight: 600; color: #15616D; margin-bottom: 10px;"><strong>Analyse</strong></h3>
+        
+        <!-- Optional: Show a placeholder or small summary -->
+        <p style="text-align: center; color: #15616D; font-weight: 500;">Contribution du programme RDC à l’employabilité des diplômés.</p>
+        <button class="analysis-toggle" onclick="toggleAnalysis('chart-final-analysis')" style="margin-top: 10px;">Afficher/Masquer l’analyse</button>
+
+        <div id="chart-final-analysis" class="analysis-content" style="display: none; margin-top: 20px; font-size: 15px; line-height: 1.6; color: #333;">
+          
+          <h4 style="color: #15616D; margin-bottom: 10px;">🔍 Analyse</h4>
+          <ul style="padding-left: 20px;">
+            <li><strong>Postes visés :</strong> les diplômés ciblent des métiers à forte valeur ajoutée tels que chef de projet, analyste data, consultant, ou product owner.</li>
+            <li><strong>Secteurs dynamiques :</strong> IT, finance, conseil, et industrie dominent les intentions, montrant une bonne orientation vers des secteurs en croissance.</li>
+            <li><strong>Salaires ciblés :</strong> une majorité vise la tranche <strong>1 900€ à 2 199€</strong> à partir d’EE2, avec un pic à 17% à EE3.</li>
+          </ul>
+
+          <h4 style="color: #15616D; margin: 20px 0 10px;">🛠️ Recommandation</h4>
+          <ol style="padding-left: 20px;">
+            <li><span style="color: #2e7d32;"><strong>Aligner la formation</strong></span> avec les besoins du marché en renforçant les compétences clés des secteurs porteurs.</li>
+            <li><span style="color: #2e7d32;"><strong>Renforcer le suivi post-formation</strong></span> (coaching, réseau, accompagnement) pour convertir les intentions en opportunités concrètes.</li>
+          </ol>
+        </div>
       </div>
+
+
+
     </div>
 
+    <div class="grid2" style="margin-bottom: 20px;">
+      <div class="chart-box" style="text-align: center;">
+        <h3 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 18px; font-weight: 600; color: #15616D; margin-bottom: 10px;"><strong>Les 3 premiers postes</strong></h3>
+        <p style="padding-top: 10px;"><strong>Conseiller commercial<span style="color:#49928a;"> 17%</span></strong></p>
+        <p><strong>Commercial<span style="color:#49928a;"> 14%</span></strong></p>
+        <p><strong>Responsable des ventes<span style="color:#49928a;"> 4%</span></strong></p>
+        <!-- <p style="color:#49928a; padding-bottom: 25px;"><strong>27% (Basé sur ES2)</strong></p> -->
+      </div>
+
+      <div class="chart-box" style="text-align: center;">
+        <h3 style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 18px; font-weight: 600; color: #15616D; margin-bottom: 10px;"><strong>Les 3 principaux domaines</strong></h3>
+        <p style="padding-top: 10px;"><strong>Immobilier <span style="color:#49928a;"> 22%</span></strong></p>
+        <p><strong>Commerce<span style="color:#49928a;"> 6%</span></strong></p>
+        <p><strong>Assurance<span style="color:#49928a;"> 4%</span></strong></p>
+      </div>
+
+      <div class="chart-box" style="text-align: center;">
+        <h3 style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 18px; font-weight: 600; color: #15616D; margin-bottom: 10px;"><strong>Fourchette salariale moyenne</strong></h3>
+        <p style="padding-top: 20px;"><strong>1 600€ – 1 899€</strong></p>
+        <p style="color:#49928a; padding-bottom: 25px;"><strong>38.57%</strong></p>
+      </div>
+
+      <div class="chart-box" style="text-align: center;">
+        <h3 style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 18px; font-weight: 600; color: #15616D; margin-bottom: 10px;"><strong>Taux de satisfaction de la formation</strong></h3>
+        <p style="padding-top: 10px; color:#49928a; font-size: 40px;"><strong>73%</strong></p>
+        <!-- <p style="color:#49928a; padding-bottom: 25px;"><strong>72.68%</strong></p> -->
+      </div>
+    </div>
 
     <hr style="border: none; border-top: 2px solid #D0E6E6; margin: 30px 0;">
 
@@ -490,6 +662,35 @@
       </div>
 
       <div class="chart-box">
+        <h3 id="chart6-title">Les 8 premières entreprises</h3>
+        <div class="tabs">
+          <button class="tab-button6" data-tab="ES1">ES1</button>
+          <button class="tab-button6 active" data-tab="ES2">ES2</button>
+          <button class="tab-button6" data-tab="ES3">ES3</button>
+          <button class="tab-button6" data-tab="ES4">ES4</button>
+        </div>
+        <div id="chart6" class="chart-container"></div>
+        <button class="analysis-toggle" onclick="toggleAnalysis('chart6-analysis')">Afficher/Masquer l’analyse</button>
+        <div id="chart6-analysis" class="analysis-content">
+          <h4 style="color: #15616D; margin: 30px 0 10px;">🔍 Analyse</h4>
+          <ul style="padding-left: 20px;">
+            <li><strong>Décathlon, Orange, Société Générale :</strong> Employeurs récurrents visibles dans toutes les vagues.</li>
+            <li><strong>Secteurs forts :</strong> Distribution et banque/assurance (Carrefour, AXA, Société Générale).</li>
+            <li><strong>Catégorie “Autre” importante :</strong> Beaucoup de diplômés en dehors du top 8 entreprises.</li>
+            <li><strong>Présence régulière d’employeurs :</strong> Indice de relations fortes ou d’intérêt récurrent pour le profil diplômé.</li>
+          </ul>
+
+          <h4 style="color: #15616D; margin: 20px 0 10px;">🛠️ Recommandations</h4>
+          <ol style="padding-left: 20px;">
+            <li><strong>Renforcer les relations entreprises :</strong> Avec les groupes majeurs (ex : AXA, Orange, Decathlon).</li>
+            <li><strong>Explorer les recruteurs “Autres” :</strong> Mieux comprendre et identifier ces structures.</li>
+            <li><strong>Mettre en valeur les employeurs partenaires :</strong> Dans les communications institutionnelles.</li>
+            <li><strong>Segmenter les entreprises :</strong> Pour mieux cibler l'accompagnement par secteur.</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- <div class="chart-box">
         <h3 id="chart6-title">Top 8 entreprises</h3>
         <div id="chart6" class="chart-container"></div>
         <button class="analysis-toggle" onclick="toggleAnalysis('chart6-analysis')">Afficher/Masquer l’analyse</button>
@@ -511,9 +712,9 @@
           </ol>
         </div>
 
-      </div>
+      </div> -->
 
-      <div class="chart-box">
+      <!-- <div class="chart-box">
         <h3>Statut professionnel</h3>
         <div class="manual-legend">
           <div class="legend-item">
@@ -557,8 +758,61 @@
             <li><strong>Améliorer le suivi des demandeurs :</strong> Services spécifiques pour ceux qui cherchent encore un emploi.</li>
           </ol>
         </div>
+      </div> -->
 
+      <div class="chart-box">
+        <h3>Statut professionnel</h3>
+        <div class="status-grid-columned">
+          <!-- Column for each ES -->
+          <div class="status-column">
+            <div class="es-label">ES1</div>
+            <div class="status-card emploi">A un emploi : 0%</div>
+            <div class="status-card recherche">Recherche : 0%</div>
+            <div class="status-card etudes">Études : 0%</div>
+            <div class="status-card inactif">Inactif : 0%</div>
+          </div>
+          <div class="status-column">
+            <div class="es-label">ES2</div>
+            <div class="status-card emploi">A un emploi : 78%</div>
+            <div class="status-card recherche">Recherche : 15%</div>
+            <div class="status-card etudes">Études : 3%</div>
+            <div class="status-card inactif">Inactif : 4%</div>
+          </div>
+          <div class="status-column">
+            <div class="es-label">ES3</div>
+            <div class="status-card emploi">A un emploi : 83%</div>
+            <div class="status-card recherche">Recherche : 10%</div>
+            <div class="status-card etudes">Études : 4%</div>
+            <div class="status-card inactif">Inactif : 3%</div>
+          </div>
+          <div class="status-column">
+            <div class="es-label">ES4</div>
+            <div class="status-card emploi">A un emploi : 85%</div>
+            <div class="status-card recherche">Recherche : 4%</div>
+            <div class="status-card etudes">Études : 4%</div>
+            <div class="status-card inactif">Inactif : 3%</div>
+          </div>
+        </div>
+        <div style="padding-top: 80px; margin-top: 20px; font-size: 15px; line-height: 1.6; color: #333;">
+          <h4 style="color: #15616D; margin: 30px 0 10px;">🔍 Analyse</h4>
+          <ul style="padding-left: 20px;">
+            <li><strong>Majorité en emploi :</strong> Dès ES2, la majorité des diplômés ayant répondu sont en poste.</li>
+            <li><strong>Stabilité croissante :</strong> Le nombre de chercheurs d’emploi passe de 20 à 4.</li>
+            <li><strong>Peu de poursuites d'études :</strong> 4 à 5 par enquête seulement.</li>
+            <li><strong>Très faible inactivité :</strong> Les inactifs sont marginaux.</li>
+          </ul>
+
+          <h4 style="color: #15616D; margin: 20px 0 10px;">🛠️ Recommandations</h4>
+          <ol style="padding-left: 20px;">
+            <li><strong>Mettre en avant les bons résultats :</strong> “80 % des diplômés en emploi” dans les messages de relance.</li>
+            <li><strong>Ajouter des filtres dynamiques :</strong> dans le tableau de bord par profil.</li>
+            <li><strong>Montrer l’évolution :</strong> Mettre en avant la montée de l’emploi entre ES2 et ES4.</li>
+            <li><strong>Améliorer le suivi des demandeurs :</strong> Services spécifiques pour ceux qui cherchent encore un emploi.</li>
+          </ol>
+        </div>
       </div>
+
+
       <div class="chart-box">
         <h3>Niveau managérial</h3>
         <div class="manual-legend">
@@ -879,130 +1133,130 @@ am5.ready(function() {
 
   // Chart 2: Donut/Ring Chart for Statut professionnel (with createSeries function)
   // Chart 2: Statut professionnel (4 Donut Charts ES1–ES4)
-  const chart2Data = {
-    ES1: [
-      { category: "Aucune activité", value: 0, index: 4 },
-      { category: "Recherche un emploi", value: 0, index: 3 },
-      { category: "Poursuit des études", value: 0, index: 2 },
-      { category: "A un emploi", value: 0, index: 1 },
-    ],
-    ES2: [
-      { category: "Aucune activité", value: 5, index: 4 },
-      { category: "Recherche un emploi", value: 20, index: 3 },
-      { category: "Poursuit des études", value: 4, index: 2 },
-      { category: "A un emploi", value: 105, index: 1 },
-    ],
-    ES3: [
-      { category: "Aucune activité", value: 3, index: 4 },
-      { category: "Recherche un emploi", value: 12, index: 3 },
-      { category: "Poursuit des études", value: 5, index: 2 },
-      { category: "A un emploi", value: 95, index: 1 },
-    ],
-    ES4: [
-      { category: "Aucune activité", value: 3, index: 4 },
-      { category: "Recherche un emploi", value: 4, index: 3 },
-      { category: "Poursuit des études", value: 4, index: 2 },
-      { category: "A un emploi", value: 95, index: 1 },
-    ]
-  };
+  // const chart2Data = {
+  //   ES1: [
+  //     { category: "Aucune activité", value: 0, index: 4 },
+  //     { category: "Recherche un emploi", value: 0, index: 3 },
+  //     { category: "Poursuit des études", value: 0, index: 2 },
+  //     { category: "A un emploi", value: 0, index: 1 },
+  //   ],
+  //   ES2: [
+  //     { category: "Aucune activité", value: 5, index: 4 },
+  //     { category: "Recherche un emploi", value: 20, index: 3 },
+  //     { category: "Poursuit des études", value: 4, index: 2 },
+  //     { category: "A un emploi", value: 105, index: 1 },
+  //   ],
+  //   ES3: [
+  //     { category: "Aucune activité", value: 3, index: 4 },
+  //     { category: "Recherche un emploi", value: 12, index: 3 },
+  //     { category: "Poursuit des études", value: 5, index: 2 },
+  //     { category: "A un emploi", value: 95, index: 1 },
+  //   ],
+  //   ES4: [
+  //     { category: "Aucune activité", value: 3, index: 4 },
+  //     { category: "Recherche un emploi", value: 4, index: 3 },
+  //     { category: "Poursuit des études", value: 4, index: 2 },
+  //     { category: "A un emploi", value: 95, index: 1 },
+  //   ]
+  // };
 
-  // Colors by category (consistent across all ES charts)
-  const statusColors = {
-    "A un emploi": am5.color("#457B9D"),       // Muted blue (from CDD)
-    "Recherche un emploi": am5.color("#D69B5A"),     // Muted sandy yellow (from Fonctionnaire)
-    "Poursuit des études": am5.color("#2A9D8F"), // Teal-green (from Auto-Entrepreneur)
-    "Aucune activité": am5.color("#A77A82")       // Softer rose taupe (from Mandataire Social)
-  };
+  // // Colors by category (consistent across all ES charts)
+  // const statusColors = {
+  //   "A un emploi": am5.color("#457B9D"),       // Muted blue (from CDD)
+  //   "Recherche un emploi": am5.color("#D69B5A"),     // Muted sandy yellow (from Fonctionnaire)
+  //   "Poursuit des études": am5.color("#2A9D8F"), // Teal-green (from Auto-Entrepreneur)
+  //   "Aucune activité": am5.color("#A77A82")       // Softer rose taupe (from Mandataire Social)
+  // };
 
-  // Create chart for each ES
-  function createDonutChartES(containerId, esLabel, data) {
-    const root = am5.Root.new(containerId);
-    root.setThemes([am5themes_Animated.new(root)]);
+  // // Create chart for each ES
+  // function createDonutChartES(containerId, esLabel, data) {
+  //   const root = am5.Root.new(containerId);
+  //   root.setThemes([am5themes_Animated.new(root)]);
 
-    const chart = root.container.children.push(
-      am5percent.PieChart.new(root, {
-        layout: root.verticalLayout,
-        innerRadius: am5.percent(50),
-        // outerWidth: am5.percent(50),
-        paddingTop: 10,
-      })
-    );
+  //   const chart = root.container.children.push(
+  //     am5percent.PieChart.new(root, {
+  //       layout: root.verticalLayout,
+  //       innerRadius: am5.percent(50),
+  //       // outerWidth: am5.percent(50),
+  //       paddingTop: 10,
+  //     })
+  //   );
 
-    // Add label in the center
-    chart.seriesContainer.children.push(
-      am5.Label.new(root, {
-        text: esLabel,
-        fontSize: 18,
-        fontWeight: "600",
-        centerX: am5.percent(50),
-        centerY: am5.percent(50),
-        fill: am5.color("#333")
-      })
-    );
+  //   // Add label in the center
+  //   chart.seriesContainer.children.push(
+  //     am5.Label.new(root, {
+  //       text: esLabel,
+  //       fontSize: 18,
+  //       fontWeight: "600",
+  //       centerX: am5.percent(50),
+  //       centerY: am5.percent(50),
+  //       fill: am5.color("#333")
+  //     })
+  //   );
 
-    const series = chart.series.push(
-      am5percent.PieSeries.new(root, {
-        valueField: "value",
-        categoryField: "category",
-        alignLabels: false
-      })
-    );
+  //   const series = chart.series.push(
+  //     am5percent.PieSeries.new(root, {
+  //       valueField: "value",
+  //       categoryField: "category",
+  //       alignLabels: false
+  //     })
+  //   );
 
-    // Configure the labels
-    series.labels.template.setAll({
-      text: "{value} | {valuePercentTotal.formatNumber('#.0')}%", // Display value and percentage
-      fontSize: 14,
-      radius: 0,
-      fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-      fontWeight: "500",
-      centerX: am5.percent(50),
-      centerY: am5.percent(50),
-      fill: am5.color("#333") // Temporary default color
-    });
+  //   // Configure the labels
+  //   series.labels.template.setAll({
+  //     text: "{value} | {valuePercentTotal.formatNumber('#.0')}%", // Display value and percentage
+  //     fontSize: 14,
+  //     radius: 0,
+  //     fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+  //     fontWeight: "500",
+  //     centerX: am5.percent(50),
+  //     centerY: am5.percent(50),
+  //     fill: am5.color("#333") // Temporary default color
+  //   });
 
-    series.labels.template.adapters.add("radius", (radius, target) => {
-      const index = target.dataItem.dataContext.index;
-      return index === 3 && esLabel === 'ES4' ? 22 : radius; // inside → negative, outside → positive
-    });
+  //   series.labels.template.adapters.add("radius", (radius, target) => {
+  //     const index = target.dataItem.dataContext.index;
+  //     return index === 3 && esLabel === 'ES4' ? 22 : radius; // inside → negative, outside → positive
+  //   });
 
-    series.ticks.template.set("visible", false);
-    // series.ticks.template.setAll({
-    //   visible: true,
-    //   stroke: am5.color("#0E3F2D"),
-    //   strokeWidth: 3
-    // });
+  //   series.ticks.template.set("visible", false);
+  //   // series.ticks.template.setAll({
+  //   //   visible: true,
+  //   //   stroke: am5.color("#0E3F2D"),
+  //   //   strokeWidth: 3
+  //   // });
 
-    series.slices.template.adapters.add("fill", (fill, target) => {
-      const cat = target.dataItem.dataContext.category;
-      return statusColors[cat] || am5.color("#ccc");
-    });
+  //   series.slices.template.adapters.add("fill", (fill, target) => {
+  //     const cat = target.dataItem.dataContext.category;
+  //     return statusColors[cat] || am5.color("#ccc");
+  //   });
 
-    series.slices.template.setAll({
-      tooltipText: "{category}: {value} ({valuePercentTotal.formatNumber('#.0')}%)", // Update tooltip to include percentage
-      stroke: am5.color("#fff"),
-      strokeWidth: 1.5,
-      cornerRadius: 6
-    });
+  //   series.slices.template.setAll({
+  //     tooltipText: "{category}: {value} ({valuePercentTotal.formatNumber('#.0')}%)", // Update tooltip to include percentage
+  //     stroke: am5.color("#fff"),
+  //     strokeWidth: 1.5,
+  //     cornerRadius: 6
+  //   });
 
-    // Set the data for the series
-    series.data.setAll(data);
+  //   // Set the data for the series
+  //   series.data.setAll(data);
 
-    // Update the label colors to match the slices
-    series.labels.each((label) => {
-      const dataItem = label.dataItem;
-      if (dataItem) {
-        const category = dataItem.get("category");
-        const color = statusColors[category] || am5.color("#ccc");
-        label.set("fill", color);
-      }
-    });
-  }
+  //   // Update the label colors to match the slices
+  //   series.labels.each((label) => {
+  //     const dataItem = label.dataItem;
+  //     if (dataItem) {
+  //       const category = dataItem.get("category");
+  //       const color = statusColors[category] || am5.color("#ccc");
+  //       label.set("fill", color);
+  //     }
+  //   });
+  // }
 
-  // Create all 4 charts
-  createDonutChartES("chart2-es1", "ES1", chart2Data.ES1);
-  createDonutChartES("chart2-es2", "ES2", chart2Data.ES2);
-  createDonutChartES("chart2-es3", "ES3", chart2Data.ES3);
-  createDonutChartES("chart2-es4", "ES4", chart2Data.ES4);
+  // // Create all 4 charts
+  // createDonutChartES("chart2-es1", "ES1", chart2Data.ES1);
+  // createDonutChartES("chart2-es2", "ES2", chart2Data.ES2);
+  // createDonutChartES("chart2-es3", "ES3", chart2Data.ES3);
+  // createDonutChartES("chart2-es4", "ES4", chart2Data.ES4);
 
 
   // Chart 3: Type de Contrat (Horizontal Grouped Bar Chart)
@@ -1582,283 +1836,242 @@ am5.ready(function() {
 
 
   // Chart 6: Top 8 entreprises (Bar Chart with Logos)
-  // Clear the chart container and replace with HTML// Clear the chart container and replace with HTML// Clear the chart container and replace with HTML// Clear the chart container and replace with HTML
-document.getElementById('chart6').innerHTML = `
-  <style>
-    #chart6 .company-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between; /* Evenly distribute items */
-      padding: 10px;
-      gap: 10px; /* Matches main HTML */
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    #chart6 .company-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-      width: calc(25% - 7.5px); /* Fixed 4 items per row, accounting for 3 gaps of 10px */
-      padding: 2px;
-      border-radius: 8px;
-      box-sizing: border-box;
-      min-width: 0; /* Override main HTML's min-width */
-      max-width: none; /* Override main HTML's max-width */
-    }
-
-    #chart6 .company-item:hover {
-      transform: scale(1.05);
-    }
-
-    #chart6 .company-circle {
-      width: 80%;
-      aspect-ratio: 1 / 1;
-      max-width: 120px;
-      border: 0px solid var(--primary); /* Use --primary from main HTML */
-      border-radius: 50%;
-      background: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      transition: border-width 0.2s ease;
-    }
-
-    #chart6 .company-item:hover .company-circle {
-      border-width: 4px;
-    }
-
-    #chart6 .company-logo {
-      max-width: 60%;
-      max-height: 60%;
-      height: auto;
-      object-fit: contain;
-    }
-
-    #chart6 .company-name {
-      font-size: clamp(10px, 1.5vw, 14px);
-      font-weight: bold;
-      color: var(--dark); /* Use --dark from main HTML */
-      text-align: center;
-      margin-bottom: 10px;
-    }
-
-    #chart6 .es-section {
-      width: 100%;
-      text-align: left;
-      font-size: clamp(8px, 1.2vw, 12px);
-      color: #333;
-      margin: 5px 0;
-    }
-
-    #chart6 .es-section span {
-      font-weight: bold;
-      color: var(--dark); /* Use --dark from main HTML */
-    }
-
-    #chart6 .es-data {
-      font-size: clamp(8px, 1vw, 11px);
-      color: var(--neutral); /* Use --neutral from main HTML */
-      margin-left: 10px;
-    }
-
-    /* Media queries to maintain fixed 4 items per row */
-    @media (max-width: 800px) {
-      #chart6 .company-item {
-        width: calc(25% - 7.5px); /* Maintain 4 items per row */
+   // Chart 6: Top 8 Companies (Circle Layout with Logos) - HTML/CSS SolutionMore actions
+  // Clear the chart container and replace with HTML
+  document.getElementById('chart6').innerHTML = `
+    <style>
+      .company-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 20px;
+        gap: 15px; /* Reduced gap to prevent excessive spacing */
+        width: 100%;
+        box-sizing: border-box;
       }
 
-      #chart6 .company-circle {
-        width: 75%;
-        max-width: 100px;
-      }
-    }
-
-    @media (max-width: 600px) {
-      #chart6 .company-item {
-        width: calc(25% - 7.5px); /* Maintain 4 items per row */
-      }
-
-      #chart6 .company-circle {
-        width: 70%;
-        max-width: 90px;
-      }
-    }
-
-    @media (max-width: 400px) {
-      #chart6 .company-item {
-        width: calc(25% - 7.5px); /* Maintain 4 items per row */
+      .company-item {
+        display: flex;
+        padding-top: 20px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        
+        flex: 1 1 160px; /* flex-grow, flex-shrink, flex-basis */
+        max-width: 25%;   /* Max 5 per row on large screens */
+        box-sizing: border-box;
       }
 
-      #chart6 .company-circle {
-        width: 65%;
-        max-width: 80px;
-      }
-    }
-  </style>
-
-  <div class="company-grid" id="companyGrid">
-    <!-- Companies will be inserted here -->
-  </div>
-`;
-
-// Company datasets per ES
-const datasets6 = {
-  ES1: [
-    { company: "Darty", value: 0, logo: "https://upload.wikimedia.org/wikipedia/commons/b/b0/Darty.svg" },
-    { company: "Decathlon", value: 0, logo: "https://www.decathlon.media/app/fo-html/vues/commun/img/commun/logo-decathlon.svg" },
-    { company: "Auchan", value: 0, logo: "https://upload.wikimedia.org/wikipedia/fr/c/cd/Logo_Auchan_%282015%29.svg" },
-    { company: "Carrefour", value: 0, logo: "https://upload.wikimedia.org/wikipedia/fr/3/3b/Logo_Carrefour.svg" },
-    { company: "Pernod Ricard", value: 0, logo: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Pernod_Ricard_logo_2019.svg" },
-    { company: "AXA Assurances", value: 0, logo: "https://upload.wikimedia.org/wikipedia/commons/9/94/AXA_Logo.svg" },
-    { company: "Société Générale", value: 0, logo: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Soci%C3%A9t%C3%A9_G%C3%A9n%C3%A9rale.svg" },
-    { company: "Orange", value: 0, logo: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" },
-    { company: "Autre", value: 0, logo: "https://www.svgrepo.com/show/490660/company.svg" }
-  ],
-  ES2: [
-    { company: "Darty", value: 4, logo: "https://upload.wikimedia.org/wikipedia/commons/b/b0/Darty.svg" },
-    { company: "Decathlon", value: 9, logo: "https://www.decathlon.media/app/fo-html/vues/commun/img/commun/logo-decathlon.svg" },
-    { company: "Auchan", value: 5, logo: "https://upload.wikimedia.org/wikipedia/fr/c/cd/Logo_Auchan_%282015%29.svg" },
-    { company: "Carrefour", value: 4, logo: "https://upload.wikimedia.org/wikipedia/fr/3/3b/Logo_Carrefour.svg" },
-    { company: "Pernod Ricard", value: 4, logo: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Pernod_Ricard_logo_2019.svg" },
-    { company: "AXA Assurances", value: 5, logo: "https://upload.wikimedia.org/wikipedia/commons/9/94/AXA_Logo.svg" },
-    { company: "Société Générale", value: 5, logo: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Soci%C3%A9t%C3%A9_G%C3%A9n%C3%A9rale.svg" },
-    { company: "Orange", value: 6, logo: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" },
-    { company: "Autre", value: 30, logo: "https://www.svgrepo.com/show/490660/company.svg" }
-  ],
-  ES3: [
-    { company: "Darty", value: 6, logo: "https://upload.wikimedia.org/wikipedia/commons/b/b0/Darty.svg" },
-    { company: "Decathlon", value: 11, logo: "https://www.decathlon.media/app/fo-html/vues/commun/img/commun/logo-decathlon.svg" },
-    { company: "Auchan", value: 6, logo: "https://upload.wikimedia.org/wikipedia/fr/c/cd/Logo_Auchan_%282015%29.svg" },
-    { company: "Carrefour", value: 7, logo: "https://upload.wikimedia.org/wikipedia/fr/3/3b/Logo_Carrefour.svg" },
-    { company: "Pernod Ricard", value: 4, logo: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Pernod_Ricard_logo_2019.svg" },
-    { company: "AXA Assurances", value: 6, logo: "https://upload.wikimedia.org/wikipedia/commons/9/94/AXA_Logo.svg" },
-    { company: "Société Générale", value: 8, logo: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Soci%C3%A9t%C3%A9_G%C3%A9n%C3%A9rale.svg" },
-    { company: "Orange", value: 8, logo: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" },
-    { company: "Autre", value: 21, logo: "https://www.svgrepo.com/show/490660/company.svg" }
-  ],
-  ES4: [
-    { company: "Darty", value: 6, logo: "https://upload.wikimedia.org/wikipedia/commons/b/b0/Darty.svg" },
-    { company: "Decathlon", value: 11, logo: "https://www.decathlon.media/app/fo-html/vues/commun/img/commun/logo-decathlon.svg" },
-    { company: "Auchan", value: 8, logo: "https://upload.wikimedia.org/wikipedia/fr/c/cd/Logo_Auchan_%282015%29.svg" },
-    { company: "Carrefour", value: 8, logo: "https://upload.wikimedia.org/wikipedia/fr/3/3b/Logo_Carrefour.svg" },
-    { company: "Pernod Ricard", value: 7, logo: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Pernod_Ricard_logo_2019.svg" },
-    { company: "AXA Assurances", value: 4, logo: "https://upload.wikimedia.org/wikipedia/commons/9/94/AXA_Logo.svg" },
-    { company: "Société Générale", value: 7, logo: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Soci%C3%A9t%C3%A9_G%C3%A9n%C3%A9rale.svg" },
-    { company: "Orange", value: 9, logo: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" },
-    { company: "Autre", value: 22, logo: "https://www.svgrepo.com/show/490660/company.svg" }
-  ]
-};
-
-function renderCompaniesChart() {
-  // Get all unique companies
-
-  const companies = [
-    ...Object.entries(
-      Object.values(datasets6).flat().reduce((acc, { company, value }) => {
-        acc[company] = (acc[company] || 0) + value;
-        return acc;
-      }, {})
-    )
-      .sort((a, b) => b[1] - a[1]) // Sort by total value descending
-      .slice(0, 8) // Take top 8
-      .map(([company]) => company) // Extract just the company name
-  ];
-  const total = 105; // Total value for percentage calculations
-
-  // Clear previous content
-  const companyGrid = document.getElementById('companyGrid');
-  companyGrid.innerHTML = "";
-
-  // Render each company
-  companies.forEach(company => {
-    const companyItem = document.createElement('div');
-    companyItem.className = 'company-item';
-
-    // Get logo (assuming all ES datasets have the same logo for a company)
-    const logo = datasets6.ES1.find(item => item.company === company)?.logo || '';
-
-    // Build ES sections
-    let esSections = '';
-        let esSections1 = '';
-    let esSections1Number = 0;
-    let esSections2 = '';
-    let esSections2Number = 0;
-    ['ES1', 'ES2', 'ES3', 'ES4'].forEach(esKey => {
-      if (esSections1Number === 2) {
-        esSections2Number ++;
-      } else {
-        esSections1Number++;
+      .company-item:hover {
+        transform: scale(1.05);
       }
 
-      const companyData = datasets6[esKey].find(item => item.company === company);
-      const value = companyData ? companyData.value : 0;
-      const percent = Math.round((value / total) * 100);
-
-      if (esSections2Number === 2) {
-        esSections2 += `<td style="padding-left:4px"> <strong>${esKey}: <strong>${value}</strong> <strong>${percent}</strong>%</td>`;
-      } else if (esSections2Number === 1) {
-        esSections2 += `<td> <strong>${esKey}</strong>: <strong>${value}</strong> <strong>${percent}%</strong></td>`;
-      } else if (esSections1Number === 2) {
-        esSections1 += `<td style="padding-left:4px"> <strong>${esKey}</strong>: <strong>${value}</strong> <strong>${percent}</strong>%</td>`;
-      } else if (esSections1Number === 1) {
-        esSections1 += `<td> <strong>${esKey}</strong>: <strong>${value}</strong> <strong>${percent}</strong>%</td>`;
+      .company-circle {
+        /* Use percentage-based sizing relative to the parent */
+        width: 80%;
+        aspect-ratio: 1 / 1; /* Ensure the circle stays circular */
+        max-width: 130px; /* Maximum size for larger screens */
+        border: 0px solid #8FD2D2;
+        border-radius: 50%;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: border-width 0.2s ease;
       }
 
-    });
+      .company-item:hover .company-circle {
+        border-width: 4px;
+      }
 
-    esSections += `
-      <div class="es-section">
-        <div class="es-data">
-        <table><tbody>
-          <tr>
-            ${esSections1}
-          </tr>
-          <tr>
-            ${esSections2}
-          </tr>
-        </tbody>
-        </table>
+      .company-logo {
+        max-width: 60%;
+        max-height: 60%;
+        height: auto;
+        object-fit: contain;
+      }
+
+      .company-count {
+        font-size: clamp(10px, 1.5vw, 16px);
+        font-weight: bold;
+        color: #0E3F2D;
+        margin-bottom: 2px;
+        text-align: center;
+      }
+
+      .company-percent {
+        font-size: clamp(8px, 1.2vw, 13px);
+        color: #666666;
+        text-align: center;
+      }
+
+      .company-name {
+        font-size: clamp(8px, 1vw, 12px);
+        color: #888888;
+        text-align: center;
+        margin-top: 5px;
+      }
+
+      /* Media queries for better control at different screen sizes */
+      @media (max-width: 800px) {
+        .company-item {
+          width: calc(25% - 15px); /* 4 items per row */
+          min-width: 90px;
+        }
+
+        .company-circle {
+          width: 75%;
+          max-width: 100px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .company-item {
+          width: calc(33.33% - 15px); /* 3 items per row */
+          min-width: 80px;
+        }
+
+        .company-circle {
+          width: 70%;
+          max-width: 90px;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .company-item {
+          width: calc(50% - 15px); /* 2 items per row */
+          min-width: 70px;
+        }
+
+        .company-circle {
+          width: 65%;
+          max-width: 80px;
+        }
+      }
+    </style>
+    
+    <div class="company-grid" id="companyGrid">
+      <!-- Companies will be inserted here -->
+    </div>
+  `;
+
+  // Company data
+  // var data6 = [
+  //   { company: "Google", value: 120, logo: "https://upload.wikimedia.org/wikipedia/commons/b/b0/Darty.svg" },
+  //   { company: "Microsoft", value: 110, logo: "https://www.decathlon.media/app/fo-html/vues/commun/img/commun/logo-decathlon.svg" },
+  //   { company: "Amazon", value: 95, logo: "https://upload.wikimedia.org/wikipedia/fr/c/cd/Logo_Auchan_%282015%29.svg" },
+  //   { company: "Apple", value: 90, logo: "https://upload.wikimedia.org/wikipedia/fr/3/3b/Logo_Carrefour.svg" },
+  //   { company: "Meta", value: 85, logo: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Pernod_Ricard_logo_2019.svg" },
+  //   { company: "Netflix", value: 80, logo: "https://upload.wikimedia.org/wikipedia/commons/9/94/AXA_Logo.svg" },
+  //   { company: "Tesla", value: 75, logo: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Soci%C3%A9t%C3%A9_G%C3%A9n%C3%A9rale.svg" },
+  //   { company: "IBM", value: 70, logo: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" }
+  // ];
+
+  // Company datasets per ES
+  const datasets6 = {
+    ES1: [
+      { company: "Darty", value: 0, logo: "https://upload.wikimedia.org/wikipedia/commons/b/b0/Darty.svg" },
+      { company: "Decathlon", value: 0, logo: "https://www.decathlon.media/app/fo-html/vues/commun/img/commun/logo-decathlon.svg" },
+      { company: "Auchan", value: 0, logo: "https://upload.wikimedia.org/wikipedia/fr/c/cd/Logo_Auchan_%282015%29.svg" },
+      { company: "Carrefour", value: 0, logo: "https://upload.wikimedia.org/wikipedia/fr/3/3b/Logo_Carrefour.svg" },
+      { company: "Pernod Ricard", value: 0, logo: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Pernod_Ricard_logo_2019.svg" },
+      { company: "AXA Assurances", value: 0, logo: "https://upload.wikimedia.org/wikipedia/commons/9/94/AXA_Logo.svg" },
+      { company: "Société Générale", value: 0, logo: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Soci%C3%A9t%C3%A9_G%C3%A9n%C3%A9rale.svg" },
+      { company: "Orange", value: 0, logo: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" },
+      // { company: "Other", value: 0, logo: "https://www.svgrepo.com/show/490660/company.svg" }
+    ],
+    ES2: [
+      { company: "Darty", value: 4, logo: "https://upload.wikimedia.org/wikipedia/commons/b/b0/Darty.svg" },
+      { company: "Decathlon", value: 9, logo: "https://www.decathlon.media/app/fo-html/vues/commun/img/commun/logo-decathlon.svg" },
+      { company: "Auchan", value: 5, logo: "https://upload.wikimedia.org/wikipedia/fr/c/cd/Logo_Auchan_%282015%29.svg" },
+      { company: "Carrefour", value: 4, logo: "https://upload.wikimedia.org/wikipedia/fr/3/3b/Logo_Carrefour.svg" },
+      { company: "Pernod Ricard", value: 4, logo: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Pernod_Ricard_logo_2019.svg" },
+      { company: "AXA Assurances", value: 5, logo: "https://upload.wikimedia.org/wikipedia/commons/9/94/AXA_Logo.svg" },
+      { company: "Société Générale", value: 5, logo: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Soci%C3%A9t%C3%A9_G%C3%A9n%C3%A9rale.svg" },
+      { company: "Orange", value: 6, logo: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" },
+      // { company: "Other", value: 65, logo: "https://www.svgrepo.com/show/490660/company.svg" }
+    ],
+    ES3: [
+      { company: "Darty", value: 6, logo: "https://upload.wikimedia.org/wikipedia/commons/b/b0/Darty.svg" },
+      { company: "Decathlon", value: 11, logo: "https://www.decathlon.media/app/fo-html/vues/commun/img/commun/logo-decathlon.svg" },
+      { company: "Auchan", value: 6, logo: "https://upload.wikimedia.org/wikipedia/fr/c/cd/Logo_Auchan_%282015%29.svg" },
+      { company: "Carrefour", value: 7, logo: "https://upload.wikimedia.org/wikipedia/fr/3/3b/Logo_Carrefour.svg" },
+      { company: "Pernod Ricard", value: 4, logo: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Pernod_Ricard_logo_2019.svg" },
+      { company: "AXA Assurances", value: 6, logo: "https://upload.wikimedia.org/wikipedia/commons/9/94/AXA_Logo.svg" },
+      { company: "Société Générale", value: 8, logo: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Soci%C3%A9t%C3%A9_G%C3%A9n%C3%A9rale.svg" },
+      { company: "Orange", value: 8, logo: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" },
+      // { company: "Other", value: 0, logo: "https://www.svgrepo.com/show/490660/company.svg" }
+    ],
+    ES4: [
+      { company: "Darty", value: 6, logo: "https://upload.wikimedia.org/wikipedia/commons/b/b0/Darty.svg" },
+      { company: "Decathlon", value: 11, logo: "https://www.decathlon.media/app/fo-html/vues/commun/img/commun/logo-decathlon.svg" },
+      { company: "Auchan", value: 8, logo: "https://upload.wikimedia.org/wikipedia/fr/c/cd/Logo_Auchan_%282015%29.svg" },
+      { company: "Carrefour", value: 8, logo: "https://upload.wikimedia.org/wikipedia/fr/3/3b/Logo_Carrefour.svg" },
+      { company: "Pernod Ricard", value: 7, logo: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Pernod_Ricard_logo_2019.svg" },
+      { company: "AXA Assurances", value: 4, logo: "https://upload.wikimedia.org/wikipedia/commons/9/94/AXA_Logo.svg" },
+      { company: "Société Générale", value: 7, logo: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Soci%C3%A9t%C3%A9_G%C3%A9n%C3%A9rale.svg" },
+      { company: "Orange", value: 9, logo: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" },
+      // { company: "Other", value: 0, logo: "https://www.svgrepo.com/show/490660/company.svg" }
+    ]
+  };
+
+  function renderCompaniesChart(esKey) {
+    const data = datasets6[esKey];
+    const sorted = [...data].sort((a, b) => b.value - a.value);
+    const top8 = sorted.slice(0, 8);
+
+    const topTotal = top8.reduce((sum, item) => sum + item.value, 0);
+    const total = 105;
+    const percentage = Math.round((topTotal / total) * 100);
+
+    // Update title
+    document.getElementById('chart6-title').innerText = `Les 8 premières entreprises : ${topTotal} / ${percentage}%`;
+
+    // Clear previous content
+    const companyGrid = document.getElementById('companyGrid');
+    companyGrid.innerHTML = "";
+
+    // Add percent to each company
+    top8.forEach(company => {
+      const companyItem = document.createElement('div');
+      companyItem.className = 'company-item';
+      const percent = Math.round((company.value / total) * 100);
+
+      companyItem.innerHTML = `
+        <div class="company-circle">
+          <img src="${company.logo}" alt="${company.company}" class="company-logo" onerror="this.style.display='none'">
         </div>
-      </div>
-    `;
+        <div class="company-count">${company.value}</div>
+        <div class="company-percent">${percent}%</div>
+        <div class="company-name">${company.company}</div>
+      `;
 
-    companyItem.innerHTML = `
-      <div class="company-circle">
-        <img src="${logo}" alt="${company}" class="company-logo" onerror="this.style.display='none'">
-      </div>
-      <div class="company-name">${company}</div>
-      ${esSections}
-    `;
+      companyItem.title = `${company.company}: ${company.value} students (${percent}%)`;
 
-    companyItem.title = `${company} Data Across ES Sections`;
+      companyItem.addEventListener("click", () => {
+        console.log(`Clicked on ${company.company}: ${company.value} students`);
+      });
 
-    companyItem.addEventListener("click", () => {
-     
+      companyGrid.appendChild(companyItem);
     });
+  }
 
-    companyGrid.appendChild(companyItem);
+  renderCompaniesChart("ES2"); // Initial render
+
+  document.querySelectorAll(".tab-button6").forEach(button => {
+    button.addEventListener("click", () => {
+      document.querySelectorAll(".tab-button6").forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
+
+      const esKey = button.getAttribute("data-tab");
+      renderCompaniesChart(esKey);
+    });
   });
-
-  // Update title
-  document.getElementById('chart6-title').innerText = `Top 8 entreprises`;
-}
-
-renderCompaniesChart(); // Initial render
-
-// Tab functionality for .tab-button6
-document.querySelectorAll(".tab-button6").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll(".tab-button6").forEach(btn => btn.classList.remove("active"));
-    button.classList.add("active");
-    renderCompaniesChart(); // Re-render (tabs may not affect display since all ES data is shown)
-  });
-});
+  
 });
 </script>
 <script>
