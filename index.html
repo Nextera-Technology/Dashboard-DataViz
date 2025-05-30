@@ -255,7 +255,7 @@
       height: 600px;
     }
     #chart4.chart-container{
-      height: 600px;
+      height: 450px;
     }
     .manual-legend {
       display: flex;
@@ -811,35 +811,37 @@
         <div class="status-grid-columned">
           <!-- Column for each ES -->
           <div class="status-column">
-            <div class="es-label">ES1</div>
-            <div class="status-card emploi">A un emploi : 0%</div>
-            <div class="status-card recherche">Recherche : 0%</div>
-            <div class="status-card etudes" style="font-size: 13px">Poursuit des études : 56%</div>
-            <div class="status-card inactif">Inactif : 0%</div>
+            <div class="es-label">EE1</div>
+            <div style="margin-bottom: 20px;" class="status-card emploi">A un emploi : 0%</div>
+            <div style="margin-bottom: 20px;" class="status-card recherche">Recherche : 0%</div>
+            <div style="margin-bottom: 20px; font-size: 13px" class="status-card etudes">Poursuit des études : 56%</div>
+            <div style="margin-bottom: 20px;" class="status-card inactif">Inactif : 0%</div>
           </div>
           <div class="status-column">
-            <div class="es-label">ES2</div>
-            <div class="status-card emploi">A un emploi : 78%</div>
-            <div class="status-card recherche">Recherche : 15%</div>
-            <div class="status-card etudes">Poursuit des études : 3%</div>
-            <div class="status-card inactif">Inactif : 4%</div>
+            <div class="es-label">EE2</div>
+            <div style="margin-bottom: 20px;" class="status-card emploi">A un emploi : 78%</div>
+            <div style="margin-bottom: 20px;" class="status-card recherche">Recherche : 15%</div>
+            <div style="margin-bottom: 20px; font-size: 13px" class="status-card etudes">Poursuit des études : 3%</div>
+            <div style="margin-bottom: 20px;" class="status-card inactif">Inactif : 4%</div>
           </div>
           <div class="status-column">
-            <div class="es-label">ES3</div>
-            <div class="status-card emploi">A un emploi : 83%</div>
-            <div class="status-card recherche">Recherche : 10%</div>
-            <div class="status-card etudes">Poursuit des études : 4%</div>
-            <div class="status-card inactif">Inactif : 3%</div>
+            <div class="es-label">EE3</div>
+            <div style="margin-bottom: 20px;" class="status-card emploi">A un emploi : 83%</div>
+            <div style="margin-bottom: 20px;" class="status-card recherche">Recherche : 10%</div>
+            <div style="margin-bottom: 20px; font-size: 13px" class="status-card etudes">Poursuit des études : 4%</div>
+            <div style="margin-bottom: 20px;" class="status-card inactif">Inactif : 3%</div>
           </div>
           <div class="status-column">
-            <div class="es-label">ES4</div>
-            <div class="status-card emploi">A un emploi : 85%</div>
-            <div class="status-card recherche">Recherche : 4%</div>
-            <div class="status-card etudes">Poursuit des études : 4%</div>
-            <div class="status-card inactif">Inactif : 3%</div>
+            <div class="es-label">EE4</div>
+            <div style="margin-bottom: 20px;" class="status-card emploi">A un emploi : 85%</div>
+            <div style="margin-bottom: 20px;" class="status-card recherche">Recherche : 4%</div>
+            <div style="margin-bottom: 20px; font-size: 13px" class="status-card etudes">Poursuit des études : 4%</div>
+            <div style="margin-bottom: 20px;" class="status-card inactif">Inactif : 3%</div>
           </div>
         </div>
-        <div style="padding-top: 80px; margin-top: 20px; font-size: 15px; line-height: 1.6; color: #333;">
+        <button style="margin-top: 60px;" class="analysis-toggle" onclick="toggleAnalysis('chart2-analysis')">Afficher/Masquer l’analyse</button>
+        <div id="chart2-analysis" class="analysis-content" style=" margin-top: 20px; font-size: 15px; line-height: 1.6; color: #333;">
+        <!-- <div style="padding-top: 30px; margin-top: 20px; font-size: 15px; line-height: 1.6; color: #333;"> -->
           <h4 style="color: #15616D; margin: 30px 0 10px;">🔍 Analyse</h4>
           <ul style="padding-left: 20px;">
             <li><strong>Majorité en emploi :</strong> Dès ES2, la majorité des diplômés ayant répondu sont en poste.</li>
@@ -871,12 +873,8 @@
             <span class="legend-label">Non</span>
           </div>
         </div>
-        <div id="chart4" class="chart-grid-container">
-          <div id="chart4-es1" class="chart-grid-item" style="width: 100%; height: 300px;"></div>
-          <div id="chart4-es2" class="chart-grid-item" style="width: 100%; height: 300px;"></div>
-          <div id="chart4-es3" class="chart-grid-item" style="width: 100%; height: 300px;"></div>
-          <div id="chart4-es4" class="chart-grid-item" style="width: 100%; height: 300px;"></div>
-        </div>
+        <div id="chart4" style="width: 100%; height: 300px;"></div>
+
         <button class="analysis-toggle" onclick="toggleAnalysis('chart4-analysis')">Afficher/Masquer l’analyse</button>
         <div id="chart4-analysis" class="analysis-content" style="margin-top: 20px; font-size: 15px; line-height: 1.6; color: #333;">
           <h4 style="color: #15616D; margin: 30px 0 10px;">🔍 Analyse</h4>
@@ -1509,108 +1507,95 @@ am5.ready(function() {
   // makeSeries("ES4", "ES4", "#0E4B4B");
 
 
-  // Chart 4: Niveau managérial (Donut Chart)
-  const chart4Data = {
-    ES1: [
-      { category: "Oui", value: 0 },
-      { category: "Non", value: 0 }
-    ],
-    ES2: [
-      { category: "Oui", value: 20 },
-      { category: "Non", value: 114 }
-    ],
-    ES3: [
-      { category: "Oui", value: 25 },
-      { category: "Non", value: 90 }
-    ],
-    ES4: [
-      { category: "Oui", value: 30 },
-      { category: "Non", value: 88 }
-    ]
-  };
+  // Chart 4: Niveau managérial (Line Chart)
+  const chart4DataLine = [
+    { es: "ES1", Oui: 0, Non: 0 },
+    { es: "ES2", Oui: 20, Non: 114 },
+    { es: "ES3", Oui: 25, Non: 90 },
+    { es: "ES4", Oui: 30, Non: 88 }
+  ];
 
-  const managerColors = {
-    "Oui": am5.color("#A77A82"),
-    "Non": am5.color("#2A9D8F")
-  };
-
-  function createDonutChartManager(containerId, esLabel, data) {
+  function createLineChartManager(containerId, data) {
     const root = am5.Root.new(containerId);
     root.setThemes([am5themes_Animated.new(root)]);
 
     const chart = root.container.children.push(
-      am5percent.PieChart.new(root, {
-        layout: root.verticalLayout,
-        innerRadius: am5.percent(35)
+      am5xy.XYChart.new(root, {
+        panX: false,
+        panY: false,
+        wheelX: "none",
+        wheelY: "none",
+        layout: root.verticalLayout
       })
     );
 
-    // Label in center
-    chart.seriesContainer.children.push(
-      am5.Label.new(root, {
-        text: esLabel,
-        fontSize: 18,
-        fontWeight: "600",
-        centerX: am5.percent(50),
-        centerY: am5.percent(50),
-        fill: am5.color("#333")
+    // X Axis (Categories: ES1, ES2...)
+    const xAxis = chart.xAxes.push(
+      am5xy.CategoryAxis.new(root, {
+        categoryField: "es",
+        renderer: am5xy.AxisRendererX.new(root, { minGridDistance: 30 }),
+        tooltip: am5.Tooltip.new(root, {})
+      })
+    );
+    xAxis.data.setAll(data);
+
+    // Y Axis (Values)
+    const yAxis = chart.yAxes.push(
+      am5xy.ValueAxis.new(root, {
+        renderer: am5xy.AxisRendererY.new(root, {})
       })
     );
 
-    const series = chart.series.push(
-      am5percent.PieSeries.new(root, {
-        valueField: "value",
-        categoryField: "category",
-        alignLabels: false
-      })
-    );
+    // Line series function
+    function createSeries(field, name, color) {
+      const series = chart.series.push(
+        am5xy.LineSeries.new(root, {
+          name: name,
+          xAxis: xAxis,
+          yAxis: yAxis,
+          valueYField: field,
+          categoryXField: "es",
+          stroke: color,
+          fill: color,
+          tooltip: am5.Tooltip.new(root, {
+            labelText: `${name}: {valueY}`
+          })
+        })
+      );
 
-    // Set slice styles
-    series.slices.template.setAll({
-      stroke: am5.color("#fff"),
-      strokeWidth: 1.5,
-      tooltipText: "{category}: {value} ({valuePercentTotal.formatNumber('#.0')}%)",
-      cornerRadius: 6
-    });
+      series.strokes.template.setAll({
+        strokeWidth: 3
+      });
 
-    // Slice colors
-    series.slices.template.adapters.add("fill", (fill, target) => {
-      const cat = target.dataItem?.dataContext?.category;
-      return managerColors[cat] || am5.color("#ccc");
-    });
+      series.bullets.push(() =>
+        am5.Bullet.new(root, {
+          sprite: am5.Circle.new(root, {
+            radius: 5,
+            fill: color,
+            stroke: am5.color(0xffffff),
+            strokeWidth: 2
+          })
+        })
+      );
 
-    // Labels
-    series.labels.template.setAll({
-      text: "{value} ({valuePercentTotal.formatNumber('#.0')}%)",
-      fontSize: 14,
-      inside: false,
-      fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-      fontWeight: "500",
-      fill: am5.color("#444"),
-      centerX: am5.percent(50),
-      centerY: am5.percent(50)
-    });
+      series.data.setAll(data);
+    }
 
-    // Update the label colors to match the slices
-    series.labels.template.adapters.add("fill", (fill, target) => {
-      const category = target.dataItem?.dataContext?.category;
-      return managerColors[category] || am5.color("#999");
-    });
+    // Add "Oui" and "Non" series
+    createSeries("Oui", "Oui", am5.color("#A77A82"));
+    createSeries("Non", "Non", am5.color("#2A9D8F"));
 
-    // Optional: hide 0% labels
-    // series.labels.template.adapters.add("visible", (visible, target) => {
-    //   return (target.dataItem?.dataContext?.value ?? 0) > 0;
-    // });
+    chart.set("cursor", am5xy.XYCursor.new(root, {
+      behavior: "none",
+      xAxis: xAxis,
+      yAxis: yAxis
+    }));
 
-    series.ticks.template.set("visible", false);
-    series.data.setAll(data);
+    chart.appear(1000, 100);
   }
 
-  // ✅ Render all 4 ES donut charts
-  createDonutChartManager("chart4-es1", "ES1", chart4Data.ES1);
-  createDonutChartManager("chart4-es2", "ES2", chart4Data.ES2);
-  createDonutChartManager("chart4-es3", "ES3", chart4Data.ES3);
-  createDonutChartManager("chart4-es4", "ES4", chart4Data.ES4);
+  // Render the chart
+  createLineChartManager("chart4", chart4DataLine);
 
 
   // Chart 5: Top 8 fonctions with tabs and dynamic update
